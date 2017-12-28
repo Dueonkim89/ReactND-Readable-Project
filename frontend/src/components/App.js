@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {Nav, Navbar, NavItem } from 'react-bootstrap';
+import { setCategories, getPosts } from '../actions/index.js';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import * as ServerCall from '../utils/api.js'
 
 class App extends Component {
 	state = {
@@ -14,6 +17,12 @@ class App extends Component {
 	
 	componentDidMount() {	
 		this.setState({ selected: 1 })
+		//set category state in redux store to values found in server
+		ServerCall.getCategories().then((data) => {
+			data.categories.forEach( category => {
+				this.props.setCategory(category);
+			})
+		})
 		//window.addEventListener('resize', this.getDimensions);
 	}
 	
@@ -25,7 +34,7 @@ class App extends Component {
 	
 	render() {
 		const { windowWidth } = this.state;
-		
+		console.log(this.props)
 		return (
 			<div className="App">			
 				<header>
@@ -60,4 +69,17 @@ class App extends Component {
 	} 
 }
 
-export default App;
+function mapStateToProps(category) {
+	return {
+		category
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		setCategory: (data) => dispatch(setCategories(data))		
+	}
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
