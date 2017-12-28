@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import '../App.css';
-//import MobileView from './MobileView.js';
-//import TabletView from './TabletView.js';
-//import DesktopView from './DesktopView.js';
 import {Nav, Navbar, NavItem } from 'react-bootstrap';
 
 class App extends Component {
@@ -38,12 +35,15 @@ class App extends Component {
 						</Navbar.Header>
 						<Nav bsStyle="tabs" activeKey={this.state.selected} onSelect={ (selectedKey) => this.setState({ selected: selectedKey }) }>
 							<NavItem eventKey={1} href="/home">All</NavItem>
-							<NavItem eventKey={2} href="#">react</NavItem>
-							<NavItem eventKey={3} href="#">redux</NavItem>
-							<NavItem eventKey={4} href="#">udacity</NavItem>
+							<NavItem eventKey={2} href="#">React</NavItem>
+							<NavItem eventKey={3} href="#">Redux</NavItem>
+							<NavItem eventKey={4} href="#">Udacity</NavItem>
 						</Nav>
 					</Navbar>
 				</header>
+				
+			
+			
 			{ /* Responsive Web Design via JS */}
 			{/*	windowWidth < 768 && (
 				<MobileView />
@@ -57,8 +57,7 @@ class App extends Component {
 			)*/}			
 		  </div>
 		);
-	}
-  
+	} 
 }
 
 export default App;
