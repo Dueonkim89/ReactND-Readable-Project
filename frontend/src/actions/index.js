@@ -10,7 +10,7 @@ export function setCategories({name, path}) {
 	}
 }
 
-export function getPosts({id, timestamp, title, body, author, category, voteScore, deleted}) {
+export function getPosts({id, timestamp, title, body, author, category, voteScore, deleted, commentCount}) {
 	return {
 		type: GET_POSTS,
 		id,
@@ -20,7 +20,8 @@ export function getPosts({id, timestamp, title, body, author, category, voteScor
 		author,
 		category,
 		voteScore,
-		deleted
+		deleted,
+		commentCount
 	}
 }
 

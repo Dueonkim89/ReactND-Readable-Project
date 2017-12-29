@@ -15,14 +15,27 @@ class App extends Component {
 		//this.setState({ windowWidth: window.innerWidth})
 	}
 	
-	componentDidMount() {	
-		this.setState({ selected: 1 })
-		//set category state in redux store to values found in server
+	getPosts = () => {
+		ServerCall.getPosts().then((data) => {
+			data.forEach( post => {
+				this.props.getPost(post);
+			})
+		})
+	}
+	
+	getCategories = () => {
 		ServerCall.getCategories().then((data) => {
 			data.categories.forEach( category => {
 				this.props.setCategory(category);
 			})
-		})
+		})		
+	}
+	
+	componentDidMount() {	
+		this.setState({ selected: 1 })
+		//set states for category and posts in redux store to values found in server
+		this.getCategories();
+		this.getPosts();
 		//window.addEventListener('resize', this.getDimensions);
 	}
 	
@@ -43,6 +56,7 @@ class App extends Component {
 							My Subscriptions: 
 						</Navbar.Header>
 						<Nav bsStyle="tabs" activeKey={this.state.selected} onSelect={ (selectedKey) => this.setState({ selected: selectedKey }) }>
+							{/* Map over this.props.categories to make nav links and route. */}
 							<NavItem eventKey={1} href="/home">All</NavItem>
 							<NavItem eventKey={2} href="#">React</NavItem>
 							<NavItem eventKey={3} href="#">Redux</NavItem>
@@ -69,15 +83,17 @@ class App extends Component {
 	} 
 }
 
-function mapStateToProps(category) {
+function mapStateToProps({ categories, posts}) {
 	return {
-		category
+		categories,
+		posts
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		setCategory: (data) => dispatch(setCategories(data))		
+		setCategory: (data) => dispatch(setCategories(data)),
+		getPost: (data) => dispatch(getPosts(data))
 	}
 }
 

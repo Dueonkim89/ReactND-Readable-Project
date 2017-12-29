@@ -16,16 +16,34 @@ function categories(state = [], action) {
 	}			
 }
 
-
 function posts( state = [], action) {
-	// TO WORK ON LATER. NEED AN ARRAY OF OBJECTS.
-	// EACH index will represent an object with its properties 
+	const {author, body, category, commentCount, deleted, id, timestamp, title, voteScore } = action;
+	if (action.type === GET_POSTS) {
+		return [
+			...state,
+			{ author, 
+			  body,
+			  category,
+			  commentCount,
+			  deleted,
+			  id,
+			  timestamp,
+			  title,
+			  voteScore
+			}
+		]
+	} else {
+		return state;
+	}
 }
+
+// reducer to make comments
 
 
 
 export default combineReducers({
-	categories
+	categories,
+	posts
 })
 
 	

@@ -6,4 +6,8 @@ const headers = {
 
 export const getCategories = () => fetch(`${api}/categories`, { headers })
 	.then(response => response.json())
+	
+export const getPosts = () => fetch(`${api}/posts`, { headers })
+	.then(response => response.json())
+	
 
