@@ -47,6 +47,7 @@ class App extends Component {
 	
 	render() {
 		const { windowWidth } = this.state;
+		const { categories } = this.props;
 		console.log(this.props)
 		return (
 			<div className="App">			
@@ -58,15 +59,13 @@ class App extends Component {
 						<Nav bsStyle="tabs" activeKey={this.state.selected} onSelect={ (selectedKey) => this.setState({ selected: selectedKey }) }>
 							{/* Map over this.props.categories to make nav links and route. */}
 							<NavItem eventKey={1} href="/home">All</NavItem>
-							<NavItem eventKey={2} href="#">React</NavItem>
-							<NavItem eventKey={3} href="#">Redux</NavItem>
-							<NavItem eventKey={4} href="#">Udacity</NavItem>
+							{categories.map(( {name}, index ) => (
+								<NavItem key={name} eventKey={index+2} href="#">{name}</NavItem>					
+							))}
 						</Nav>
 					</Navbar>
-				</header>
-				
-			
-			
+				</header>		
+
 			{ /* Responsive Web Design via JS */}
 			{/*	windowWidth < 768 && (
 				<MobileView />
