@@ -4,11 +4,15 @@ import { setCategories, getPosts } from '../actions/index.js';
 import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js'
+import { Route, withRouter } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import ReactPage  from './reactpage.js';
+import ReduxPage  from './reduxpage.js';
+import UdacityPage  from './udacitypage.js';
 
 class App extends Component {
 	state = {
-		windowWidth: '',
-		selected: ''
+		windowWidth: ''
 	}
 	
 	getDimensions = () => {
@@ -31,8 +35,7 @@ class App extends Component {
 		})		
 	}
 	
-	componentDidMount() {	
-		this.setState({ selected: 1 })
+	componentDidMount() {
 		//set states for category and posts in redux store to values found in server
 		this.getCategories();
 		this.getPosts();
@@ -43,41 +46,51 @@ class App extends Component {
 		//window.removeEventListener('resize', this.getDimensions);
 	}	
 	
-	
-	
-	render() {
-		const { windowWidth } = this.state;
+	render() {	
 		const { categories } = this.props;
 		console.log(this.props)
 		return (
-			<div className="App">			
+			<div className="App">
+			{/* The default nav bar that shows up in every url path.*/}
 				<header>
 					<Navbar bsStyle='default' fixedTop={true} fluid={true}>
 						<Navbar.Header style={{ margin: '1.5rem'}}>
 							My Subscriptions: 
 						</Navbar.Header>
-						<Nav bsStyle="tabs" activeKey={this.state.selected} onSelect={ (selectedKey) => this.setState({ selected: selectedKey }) }>
-							{/* Map over this.props.categories to make nav links and route. */}
-							<NavItem eventKey={1} href="/home">All</NavItem>
-							{categories.map(( {name}, index ) => (
-								<NavItem key={name} eventKey={index+2} href="#">{name}</NavItem>					
+						<Nav bsStyle="tabs">
+							{/* Map over this.props.categories to make nav links and route. 
+								Allow routing for these Nav Items */}
+								<LinkContainer exact={true} to="/">
+									<NavItem>All</NavItem>
+								</LinkContainer>
+							{categories.map(( {name, path}, index ) => (
+								<LinkContainer key={name} to={`/${path}`}>
+									<NavItem>{name}</NavItem>	
+								</LinkContainer>
 							))}
 						</Nav>
 					</Navbar>
-				</header>		
+				</header>
+				
+				<Route exact path="/" render={() => (
+					<div style={{ margin: '8rem'}}>This is the home page</div>							
+				)}/>
+				
+				<Route exact path="/react" render={() => (
+					<ReactPage/>		
+				)}/>
+				
+				<Route exact path="/redux" render={() => (
+					<ReduxPage/>				
+				)}/>
+				
+				<Route exact path="/udacity" render={() => (
+					<UdacityPage/>			
+				)}/>				
+		
 
-			{ /* Responsive Web Design via JS */}
-			{/*	windowWidth < 768 && (
-				<MobileView />
-			
-			)}			
-			{	windowWidth  >= 768 &&  windowWidth  <= 1024 && (
-				<TabletView />			
-			)}
-			{	windowWidth  > 1024 && (
-				<DesktopView />			
-			)*/}			
-		  </div>
+														
+			</div>
 		);
 	} 
 }
@@ -97,4 +110,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
