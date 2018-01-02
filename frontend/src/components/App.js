@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { setCategories, getPosts } from '../actions/index.js';
-import { Nav, Navbar, NavItem, Jumbotron, Grid, Row, Col } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js'
 import { Route, withRouter } from 'react-router-dom';
@@ -71,8 +71,7 @@ class App extends Component {
 						))}
 					</Nav>
 				</Navbar>
-				
-				
+								
 				<Jumbotron id="iconHolder" style={{margin: '0', padding:'0', backgroundColor: '#A2A2A2', color:'#F2F2F2'}}>
 					<Row>
 						<Col xs={4} sm={2} md={2}> <img style={{margin: '1.25rem 0 0 0'}} src={redditLogo} alt="logo" /></Col>
@@ -80,7 +79,39 @@ class App extends Component {
 					</Row>
 					
 				</Jumbotron>
-				<Jumbotron>
+				<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0', backgroundColor: '#D2D2D2'}}>
+					<Row>			
+						<Col xs={6} sm={2} md={2}>
+							<Button onClick={() => console.log('create action to sort by highest amount of comments')} 
+									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+									bsStyle="link">
+									Popular
+							</Button>
+						</Col>
+						<Col xs={6} sm={1} md={1}>
+							<Button onClick={() => console.log('create action to sort by recent date')} 
+								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+								bsStyle="link">
+								New
+							</Button>
+						</Col>
+						<Col xs={6} sm={1} md={1}>
+							<Button onClick={() => console.log('create action to sort by oldest date')} 
+								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+								bsStyle="link">
+								Old
+							</Button>
+						</Col>
+						<Col xs={6} sm={2} md={2}>
+							<Button onClick={() => console.log('create option to make new posts')} 
+								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+								bsStyle="link">
+								Create New Post
+							</Button>
+						</Col>
+					</Row>
+				</Jumbotron>				
+				<Jumbotron id="postDiv">
 					<h1>loop thru the redux store (posts) to show relevant links in jumbotron</h1>
 				
 				</Jumbotron>
@@ -88,7 +119,7 @@ class App extends Component {
 				
 				
 				<Route exact path="/" render={() => (
-					<div style={{ margin: '8rem'}}>This is the home page</div>							
+					<div style={{ margin: '2rem'}}>This is the home page</div>		
 				)}/>
 				
 				<Route exact path="/react" render={() => (

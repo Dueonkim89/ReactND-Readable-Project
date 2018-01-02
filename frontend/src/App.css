@@ -37,3 +37,15 @@ a:hover {
   to { transform: rotate(360deg); }
 }
 
+button {
+	color: #161616 !important;
+}
+
+button:focus, button:active {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+button:hover {
+	color: #818181 !important;
+}
