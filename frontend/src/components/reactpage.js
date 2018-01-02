@@ -10,7 +10,6 @@ import { Route, withRouter } from 'react-router-dom';
 class ReactPage extends Component {
 			
 	render() {
-		console.log('in react page')
 		return (
 			<div className="App">	
 				<div style={{ margin: '8rem'}}>This is the react page</div>																													

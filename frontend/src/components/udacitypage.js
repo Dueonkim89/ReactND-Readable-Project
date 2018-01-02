@@ -10,7 +10,6 @@ import { Route, withRouter } from 'react-router-dom';
 class UdacityPage extends Component {
 			
 	render() {
-		console.log('in udacity page')
 		return (
 			<div className="App">	
 				<div style={{ margin: '8rem'}}>This is the Udacity page</div>																													

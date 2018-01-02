@@ -10,7 +10,6 @@ import { Route, withRouter } from 'react-router-dom';
 class ReduxPage extends Component {
 			
 	render() {
-		console.log('in redux page')
 		return (
 			<div className="App">	
 				<div style={{ margin: '8rem'}}>This is the Redux page</div>																													
