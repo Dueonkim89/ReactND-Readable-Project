@@ -1,27 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
 a {
 	text-decoration: none;
 	color: inherit;
@@ -30,11 +6,6 @@ a {
 a:hover {
 	text-decoration: none;
 	color: inherit;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 button {
@@ -48,4 +19,29 @@ button:focus, button:active {
 
 button:hover {
 	color: #818181 !important;
+}
+
+.postDiv {
+	position: relative;
+}
+
+.topArrow {
+	position: absolute;
+	bottom: 114%;
+	left: 4.75rem;
+}
+
+.downArrow {
+	position: absolute;	
+	top: 120%;
+	left: 4.75rem;
+}
+
+.voteScore {
+	margin-left: 3.6rem;
+}
+
+.postContainer {
+	border: 2px solid yellow !important;
+	padding: 3rem 0;
 }

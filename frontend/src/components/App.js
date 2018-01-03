@@ -7,6 +7,8 @@ import * as ServerCall from '../utils/api.js'
 import { Route, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';
+import downArrowIcon from '../icons/downArrowIcon.svg';
+import upArrowIcon from '../icons/upArrowIcon.svg';
 import ReactPage  from './reactpage.js';
 import ReduxPage  from './reduxpage.js';
 import UdacityPage  from './udacitypage.js';
@@ -72,14 +74,13 @@ class App extends Component {
 					</Nav>
 				</Navbar>
 								
-				<Jumbotron id="iconHolder" style={{margin: '0', padding:'0', backgroundColor: '#A2A2A2', color:'#F2F2F2'}}>
+				<Jumbotron id="iconHolder" style={{margin: '0', padding:'0 3rem', backgroundColor: '#A2A2A2', color:'#F2F2F2'}}>
 					<Row>
 						<Col xs={4} sm={2} md={2}> <img style={{margin: '1.25rem 0 0 0'}} src={redditLogo} alt="logo" /></Col>
 						<Col xs={8} sm={10} md={10}><h1 style={{ fontSize: '4.45rem',textAlign:'left'}}>/R/eadit</h1></Col>
-					</Row>
-					
+					</Row>				
 				</Jumbotron>
-				<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0', backgroundColor: '#D2D2D2'}}>
+				<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 					<Row>			
 						<Col xs={6} sm={2} md={2}>
 							<Button onClick={() => console.log('create action to sort by highest amount of comments')} 
@@ -110,16 +111,20 @@ class App extends Component {
 							</Button>
 						</Col>
 					</Row>
-				</Jumbotron>				
-				<Jumbotron id="postDiv">
-					<h1>loop thru the redux store (posts) to show relevant links in jumbotron</h1>
-				
-				</Jumbotron>
-				
-				
+				</Jumbotron>								
 				
 				<Route exact path="/" render={() => (
-					<div style={{ margin: '2rem'}}>This is the home page</div>		
+					<Row className="postContainer">
+						<Col xs={1} md={1} className='postDiv'>
+							<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>																
+								<img src={upArrowIcon} alt='Up Arrow Icon'/>
+							</a> 
+							<a className="downArrow" onClick={()=> console.log('decrement voteScore by 1')}>																
+								<img src={downArrowIcon} alt='Down Arrow Icon'/>
+							</a> 
+							<span className="voteScore">3</span>
+						</Col>
+					</Row>						
 				)}/>
 				
 				<Route exact path="/react" render={() => (
