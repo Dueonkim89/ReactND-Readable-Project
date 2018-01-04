@@ -1,3 +1,8 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;
@@ -21,7 +26,7 @@ button:hover {
 	color: #818181 !important;
 }
 
-.postDiv {
+.iconDiv {
 	position: relative;
 }
 
@@ -33,7 +38,7 @@ button:hover {
 
 .downArrow {
 	position: absolute;	
-	top: 120%;
+	top: 105%;
 	left: 4.75rem;
 }
 
@@ -42,6 +47,68 @@ button:hover {
 }
 
 .postContainer {
-	border: 2px solid yellow !important;
 	padding: 3rem 0;
+	background-color: #e6e6e6;
+}
+
+.titleDiv {
+	margin-top: -3rem;
+}
+
+.listTitle {
+	margin: 1.4rem 0 0 6rem;
+	font-size: 1.5rem;
+	display: inline-block;
+}
+
+.listTitle:hover {
+	color: #778899;
+}
+
+.categoryDiv {
+	font-size: 1.2rem;	
+	margin: .75rem 0 0 6rem;
+	display: block;
+}
+
+.category, .date, .author {
+	margin-right: 1.75rem;
+}
+
+@media (min-width: 768px) {
+	.titleDiv {
+		margin-top: -1.35rem;
+	}	
+	
+	.listTitle {
+		margin: 0 0 .75rem 1.15rem;
+		font-size: 2.15rem;
+		display: inline-block;
+	}
+	
+	.categoryDiv {
+		font-size: 1.35rem;	
+		margin: 0 0 .75rem 1.15rem;
+	}
+	
+	.voteScore {
+		font-size: 1.65rem;
+	}
+	
+	.iconDiv {
+		margin-top: .75rem;
+	}	
+}
+
+@media (min-width: 1024px) {
+	.listTitle {
+		font-size: 2.45rem;
+	}	
+	.categoryDiv {
+		font-size: 1.5rem;	
+	}
+	
+	.iconDiv {
+		margin-top: 1rem;
+	}
 }

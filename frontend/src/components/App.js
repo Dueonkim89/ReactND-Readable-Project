@@ -4,7 +4,7 @@ import { setCategories, getPosts } from '../actions/index.js';
 import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js'
-import { Route, withRouter } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';
 import downArrowIcon from '../icons/downArrowIcon.svg';
@@ -115,7 +115,7 @@ class App extends Component {
 				
 				<Route exact path="/" render={() => (
 					<Row className="postContainer">
-						<Col xs={1} md={1} className='postDiv'>
+						<Col xs={1} md={1} className='iconDiv'>
 							<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>																
 								<img src={upArrowIcon} alt='Up Arrow Icon'/>
 							</a> 
@@ -124,7 +124,16 @@ class App extends Component {
 							</a> 
 							<span className="voteScore">3</span>
 						</Col>
-					</Row>						
+						<Col xs={11} md={7} className='titleDiv'>
+							<Link to='/zyzz' className='listTitle'>Udacity is the best place to learn React</Link>
+							<div className='categoryDiv'>
+								<span className='category'>Category: React</span>
+								<span className='author'>Author: Anon</span>
+								<span className='date'>Date: 12/24/17</span>
+								<span className='comments'>Comments: 2</span>
+							</div>
+						</Col>
+					</Row>					
 				)}/>
 				
 				<Route exact path="/react" render={() => (
