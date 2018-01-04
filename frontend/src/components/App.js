@@ -22,6 +22,10 @@ class App extends Component {
 		//this.setState({ windowWidth: window.innerWidth})
 	}
 	
+	getDate = (posixNumber) => {
+		return new Date(posixNumber).toLocaleDateString();
+	}
+	
 	getPosts = () => {
 		ServerCall.getPosts().then((data) => {
 			data.forEach( post => {
