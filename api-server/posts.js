@@ -24,6 +24,50 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     commentCount: 0
+  },
+  "8616a608a4997b64": {
+	id: '8616a608a4997b64',
+	timestamp: 1510526683000,
+	title: 'Is React the best Javascript framework?',
+	body: 'Yes it is!',
+	author: 'ReactFanatic',
+	category: 'react',
+	voteScore: 4,
+	deleted: false,
+	commentCount: 2
+  },
+  "8445bf0d44ae3dcc": {
+	id: '8445bf0d44ae3dcc',
+	timestamp: 1509449574000,
+	title: "Redux the better way to manage your application's data",
+	body: 'Here are the ways Redux can improve data management..',
+	author: 'ReduxWizard',
+	category: 'redux',
+	voteScore: 3,
+    deleted: false,
+    commentCount: 1
+  },
+  "9d031a6fa369cecb": {
+	id: '9d031a6fa369cecb',
+	timestamp: 1506245492000,
+	title: 'Udacity the coolest place to hang out since Chuck E. Cheese.'
+	body: 'Its true!',
+	author: 'Yu Dat City',
+	category: 'udacity',
+	voteScore: 7,
+	deleted: false,
+	commentCount: 3
+  },
+  "b80c30fdde431451": {
+	id: 'b80c30fdde431451',
+	timestamp: 1492154679000,
+	title: 'Words that rhyme with Udacity.',
+	body: 'Can anyone think of any?',
+	author: 'BoredGuy123',
+	category: 'udacity',
+	voteScore: -2,
+	deleted: false,
+	commentCount: 1	  
   }
 }
 

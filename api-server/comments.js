@@ -23,6 +23,76 @@ const defaultData = {
     voteScore: -5,
     deleted: false,
     parentDeleted: false
+  },
+  "bbadf558677c9eb7": {
+	id: 'bbadf558677c9eb7',
+	parentId: '8616a608a4997b64',
+	timestamp: 1510557879000,
+	body: 'React is the best!',
+	author: 'ReactUser',
+	voteScore: 2,
+    deleted: false,
+    parentDeleted: false	
+  },
+  "b0afe3808b8e4c48": {
+	id: 'b0afe3808b8e4c48',
+	parentId: '8616a608a4997b64',
+	timestamp: 1510576581000,
+	body: 'React > Angular!',
+	author: 'ReactUser2',
+	voteScore: 3,
+    deleted: false,
+    parentDeleted: false	
+  }, 
+  "4d344cd62d514e97": {
+	id: '4d344cd62d514e97', 
+	parentId: '8445bf0d44ae3dcc',
+	timestamp: 1509413781000,
+	body: 'Great article! 10/10 would read again.',
+	author: 'ReduxUser',
+	voteScore: 1,
+    deleted: false,
+    parentDeleted: false	
+  },  
+  "81f4a30e9b4ee19f": {
+	id: '81f4a30e9b4ee19f',
+	parentId: "9d031a6fa369cecb",
+	timestamp: 1506246141000,
+	body: 'OP is a',
+	author: 'trollyburger',
+	voteScore: 3,
+	deleted: false,
+	parentDeleted: false
+  },
+  "b0607ded148a48b9": {
+	id: 'b0607ded148a48b9',
+	parentId: "9d031a6fa369cecb",
+	timestamp: 1506246321000,
+	body: 'wonderful',
+	author: 'NotUnderTheBridge',
+	voteScore: -2,
+	deleted: false,
+	parentDeleted: false
+  },
+  '8f27a3149ff485ef': {
+	id: '8f27a3149ff485ef',
+	parentId: "9d031a6fa369cecb",
+	timestamp: 1506246621000,
+	body: 'contributor',
+	author: 'NoFunAllowed',
+	voteScore: -4,
+	deleted: false,
+	parentDeleted: false
+  }
+  '1f738bbc482c4a36': {
+	id: '1f738bbc482c4a36',
+	parentId: "b80c30fdde431451",
+	timestamp: 1506246861000,
+	body: 'There are none!',
+	author: 'SoundLogic',
+	voteScore: -3,
+	deleted: false,
+	parentDeleted: false	
   }
 }
 

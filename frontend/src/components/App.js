@@ -54,7 +54,7 @@ class App extends Component {
 	}	
 	
 	render() {	
-		const { categories } = this.props;
+		const { categories, posts } = this.props;
 		console.log(this.props)
 		return (
 			<div className="App">
@@ -93,14 +93,14 @@ class App extends Component {
 									Popular
 							</Button>
 						</Col>
-						<Col xs={6} sm={1} md={1}>
+						<Col xs={6} sm={1} md={2}>
 							<Button onClick={() => console.log('create action to sort by recent date')} 
 								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 								bsStyle="link">
 								New
 							</Button>
 						</Col>
-						<Col xs={6} sm={1} md={1}>
+						<Col xs={6} sm={1} md={2}>
 							<Button onClick={() => console.log('create action to sort by oldest date')} 
 								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 								bsStyle="link">
@@ -118,26 +118,31 @@ class App extends Component {
 				</Jumbotron>								
 				
 				<Route exact path="/" render={() => (
-					<Row className="postContainer">
-						<Col xs={1} md={1} className='iconDiv'>
-							<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>																
-								<img src={upArrowIcon} alt='Up Arrow Icon'/>
-							</a> 
-							<a className="downArrow" onClick={()=> console.log('decrement voteScore by 1')}>																
-								<img src={downArrowIcon} alt='Down Arrow Icon'/>
-							</a> 
-							<span className="voteScore">3</span>
-						</Col>
-						<Col xs={11} md={7} className='titleDiv'>
-							<Link to='/zyzz' className='listTitle'>Udacity is the best place to learn React</Link>
-							<div className='categoryDiv'>
-								<span className='category'>Category: React</span>
-								<span className='author'>Author: Anon</span>
-								<span className='date'>Date: 12/24/17</span>
-								<span className='comments'>Comments: 2</span>
-							</div>
-						</Col>
-					</Row>					
+					<div>
+						{posts.map( eachPost => {
+							console.log(eachPost)
+						})}
+						<Row className="postContainer">
+							<Col xs={1} md={1} className='iconDiv'>
+								<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>																
+									<img src={upArrowIcon} alt='Up Arrow Icon'/>
+								</a> 
+								<a className="downArrow" onClick={()=> console.log('decrement voteScore by 1')}>																
+									<img src={downArrowIcon} alt='Down Arrow Icon'/>
+								</a> 
+								<span className="voteScore">3</span>
+							</Col>
+							<Col xs={11} md={7} className='titleDiv'>
+								<Link to='/zyzz' className='listTitle'>Udacity is the best place to learn React</Link>
+								<div className='categoryDiv'>
+									<span className='category'>Category: React</span>
+									<span className='author'>Author: Anon</span>
+									<span className='date'>Date: 12/24/17</span>
+									<span className='comments'>Comments: 2</span>
+								</div>
+							</Col>
+						</Row>							
+					</div>
 				)}/>
 				
 				<Route exact path="/react" render={() => (
