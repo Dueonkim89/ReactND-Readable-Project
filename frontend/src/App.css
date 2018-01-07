@@ -3,6 +3,10 @@ html, body {
     overflow-x: hidden;
 }
 
+body {
+	background-color: #e6e6e6;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;

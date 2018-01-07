@@ -1,37 +1,26 @@
 import React, { Component } from 'react';
-import '../App.css';
-import { setCategories, getPosts } from '../actions/index.js';
 //import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 //import * as ServerCall from '../utils/api.js'
 import { Route, withRouter } from 'react-router-dom';
-//import { LinkContainer } from 'react-router-bootstrap';
+import DisplayPosts from './DisplayPosts.js';
 
 class ReactPage extends Component {
-			
+
 	render() {
+		const { posts } = this.props;
 		return (
-			<div className="App">	
-				<div style={{ margin: '8rem'}}>This is the react page</div>																													
-			</div>
+			<DisplayPosts posts={posts.filter(post => post.category === 'react')}/>		
 		);
 	} 
 }
 
 
-function mapStateToProps({ categories, posts}) {
+function mapStateToProps({ posts}) {
 	return {
-		categories,
 		posts
 	}
 }
 
-function mapDispatchToProps(dispatch) {
-	return {
-		setCategory: (data) => dispatch(setCategories(data)),
-		getPost: (data) => dispatch(getPosts(data))
-	}
-}
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReactPage));
+export default withRouter(connect(mapStateToProps, null)(ReactPage));

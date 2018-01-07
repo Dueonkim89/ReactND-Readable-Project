@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import '../App.css';
 import { setCategories, getPosts } from '../actions/index.js';
 //import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 //import * as ServerCall from '../utils/api.js'
 import { Route, withRouter } from 'react-router-dom';
-//import { LinkContainer } from 'react-router-bootstrap';
+import DisplayPosts from './DisplayPosts.js';
 
 class ReduxPage extends Component {
 			
 	render() {
+		const { posts } = this.props;
 		return (
-			<div className="App">	
-				<div style={{ margin: '8rem'}}>This is the Redux page</div>																													
-			</div>
+			<DisplayPosts posts={posts.filter(post => post.category === 'redux')}/>																													
 		);
 	} 
 }
 
 
-function mapStateToProps({ categories, posts}) {
+function mapStateToProps({ posts }) {
 	return {
-		categories,
 		posts
 	}
 }
