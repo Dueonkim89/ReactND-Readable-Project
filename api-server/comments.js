@@ -83,7 +83,7 @@ const defaultData = {
 	voteScore: -4,
 	deleted: false,
 	parentDeleted: false
-  }
+  },
   '1f738bbc482c4a36': {
 	id: '1f738bbc482c4a36',
 	parentId: "b80c30fdde431451",

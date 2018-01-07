@@ -4,14 +4,13 @@ import { setCategories, getPosts } from '../actions/index.js';
 import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js'
-import { Link, Route, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';
-import downArrowIcon from '../icons/downArrowIcon.svg';
-import upArrowIcon from '../icons/upArrowIcon.svg';
 import ReactPage  from './reactpage.js';
 import ReduxPage  from './reduxpage.js';
-import UdacityPage  from './udacitypage.js';
+import UdacityPage from './udacitypage.js';
+import DisplayPosts from './DisplayPosts.js';
 
 class App extends Component {
 	state = {
@@ -20,11 +19,7 @@ class App extends Component {
 	
 	getDimensions = () => {
 		//this.setState({ windowWidth: window.innerWidth})
-	}
-	
-	getDate = (posixNumber) => {
-		return new Date(posixNumber).toLocaleDateString();
-	}
+	}	
 	
 	getPosts = () => {
 		ServerCall.getPosts().then((data) => {
@@ -77,7 +72,8 @@ class App extends Component {
 						))}
 					</Nav>
 				</Navbar>
-								
+				
+				{/* Jumbotron that contains the logo/header and the buttons to filter the posts*/}	
 				<Jumbotron id="iconHolder" style={{margin: '0', padding:'0 3rem', backgroundColor: '#A2A2A2', color:'#F2F2F2'}}>
 					<Row>
 						<Col xs={4} sm={2} md={2}> <img style={{margin: '1.25rem 0 0 0'}} src={redditLogo} alt="logo" /></Col>
@@ -118,31 +114,7 @@ class App extends Component {
 				</Jumbotron>								
 				
 				<Route exact path="/" render={() => (
-					<div>
-						{posts.map( eachPost => {
-							console.log(eachPost)
-						})}
-						<Row className="postContainer">
-							<Col xs={1} md={1} className='iconDiv'>
-								<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>																
-									<img src={upArrowIcon} alt='Up Arrow Icon'/>
-								</a> 
-								<a className="downArrow" onClick={()=> console.log('decrement voteScore by 1')}>																
-									<img src={downArrowIcon} alt='Down Arrow Icon'/>
-								</a> 
-								<span className="voteScore">3</span>
-							</Col>
-							<Col xs={11} md={7} className='titleDiv'>
-								<Link to='/zyzz' className='listTitle'>Udacity is the best place to learn React</Link>
-								<div className='categoryDiv'>
-									<span className='category'>Category: React</span>
-									<span className='author'>Author: Anon</span>
-									<span className='date'>Date: 12/24/17</span>
-									<span className='comments'>Comments: 2</span>
-								</div>
-							</Col>
-						</Row>							
-					</div>
+					<DisplayPosts posts={posts}/>
 				)}/>
 				
 				<Route exact path="/react" render={() => (

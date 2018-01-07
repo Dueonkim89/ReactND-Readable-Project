@@ -50,7 +50,7 @@ const defaultData = {
   "9d031a6fa369cecb": {
 	id: '9d031a6fa369cecb',
 	timestamp: 1506245492000,
-	title: 'Udacity the coolest place to hang out since Chuck E. Cheese.'
+	title: 'Udacity the coolest place to hang out since Chuck E. Cheese.',
 	body: 'Its true!',
 	author: 'Yu Dat City',
 	category: 'udacity',
