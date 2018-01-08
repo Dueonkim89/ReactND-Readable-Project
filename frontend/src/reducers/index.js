@@ -1,4 +1,6 @@
-import { SET_CATEGORIES, GET_POSTS } from '../actions/index.js';
+import { 
+SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST
+} from '../actions/index.js';
 import { combineReducers } from 'redux';
 
 function categories(state = [], action) {
@@ -32,8 +34,14 @@ function posts( state = [], action) {
 			  voteScore
 			}
 		]
-	} else {
-		return state;
+	}	else if (action.type === SORT_BY_VOTESCORE) {
+			return [...state].sort( (a,b) =>  b.voteScore - a.voteScore )
+	}	else if (action.type === SORT_BY_OLDEST) {
+			return [...state].sort( (a,b) =>  a.timestamp - b.timestamp )
+	}	else if (action.type === SORT_BY_NEWEST) {
+			return [...state].sort( (a,b) =>  b.timestamp - a.timestamp )
+	}	else {
+			return state;
 	}
 }
 

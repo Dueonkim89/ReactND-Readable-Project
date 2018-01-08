@@ -5,6 +5,7 @@ import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
 
 class DisplayPosts extends Component {
+	
 	getDate = (posixNumber) => {
 		return new Date(posixNumber).toLocaleDateString();
 	}	
@@ -29,7 +30,7 @@ class DisplayPosts extends Component {
 								)}									
 							</Col>
 							<Col xs={11} md={9} className='titleDiv'>
-								<Link to={`/${eachPost.id}`} className='listTitle'>{eachPost.title}</Link>
+								<Link to={`/${eachPost.category}/${eachPost.id}`} className='listTitle'>{eachPost.title}</Link>
 								<div className='categoryDiv'>
 									<span className='category'>Category: {eachPost.category}</span>
 									<span className='author'>Author: {eachPost.author}</span>

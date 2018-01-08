@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { setCategories, getPosts } from '../actions/index.js';
+import { 
+setCategories, getPosts, sortByVoteOrder, sortByNewestDate, sortByOldestDate 
+} from '../actions/index.js';
 import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js'
@@ -16,10 +18,6 @@ class App extends Component {
 	state = {
 		windowWidth: ''
 	}
-	
-	getDimensions = () => {
-		//this.setState({ windowWidth: window.innerWidth})
-	}	
 	
 	getPosts = () => {
 		ServerCall.getPosts().then((data) => {
@@ -37,17 +35,24 @@ class App extends Component {
 		})		
 	}
 	
+	sortByVoteScore = () => {		
+		this.props.sortByVotes();
+	}
+	
+	sortByOldest = () => {		
+		this.props.sortByOld();
+	}
+	
+	sortByNewest = () => {		
+		this.props.sortByNew();
+	}	
+	
 	componentDidMount() {
 		//set states for category and posts in redux store to values found in server
 		this.getCategories();
 		this.getPosts();
-		//window.addEventListener('resize', this.getDimensions);
 	}
-	
-	componentWillUnmount() {	
-		//window.removeEventListener('resize', this.getDimensions);
-	}	
-	
+		
 	render() {	
 		const { categories, posts } = this.props;
 		console.log(this.props)
@@ -83,21 +88,21 @@ class App extends Component {
 				<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 					<Row>			
 						<Col xs={6} sm={2} md={2}>
-							<Button onClick={() => console.log('create action to sort by highest amount of comments')} 
+							<Button onClick={ () => this.sortByVoteScore() } 
 									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 									bsStyle="link">
 									Popular
 							</Button>
 						</Col>
 						<Col xs={6} sm={1} md={2}>
-							<Button onClick={() => console.log('create action to sort by recent date')} 
+							<Button onClick={ () => this.sortByNewest() } 
 								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 								bsStyle="link">
 								New
 							</Button>
 						</Col>
 						<Col xs={6} sm={1} md={2}>
-							<Button onClick={() => console.log('create action to sort by oldest date')} 
+							<Button onClick={ () => this.sortByOldest() } 
 								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 								bsStyle="link">
 								Old
@@ -146,7 +151,10 @@ function mapStateToProps({ categories, posts}) {
 function mapDispatchToProps(dispatch) {
 	return {
 		setCategory: (data) => dispatch(setCategories(data)),
-		getPost: (data) => dispatch(getPosts(data))
+		getPost: (data) => dispatch(getPosts(data)),
+		sortByVotes : (data) => dispatch(sortByVoteOrder(data)),
+		sortByNew: (data) => dispatch(sortByNewestDate(data)),
+		sortByOld: (data) => dispatch(sortByOldestDate(data))
 	}
 }
 
