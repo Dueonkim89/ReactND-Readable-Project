@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//import { Nav, Navbar, NavItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
-//import * as ServerCall from '../utils/api.js'
 import { Route, withRouter } from 'react-router-dom';
 import DisplayPosts from './DisplayPosts.js';
 
@@ -14,12 +12,10 @@ class ReactPage extends Component {
 	} 
 }
 
-
 function mapStateToProps({ posts}) {
 	return {
 		posts
 	}
 }
-
 
 export default withRouter(connect(mapStateToProps, null)(ReactPage));

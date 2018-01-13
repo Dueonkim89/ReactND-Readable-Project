@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchVoteScore } from '../actions/index.js';
+import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
+import { sortByVoteOrder, sortByNewestDate, sortByOldestDate } from '../actions/index.js';
 
 class DisplayPosts extends Component {
 	getDate = (posixNumber) => {
@@ -20,11 +21,55 @@ class DisplayPosts extends Component {
 		}
 		this.props.voteOnPost(voteInfo)
 	}
+	
+	sortByVoteScore = () => {		
+		this.props.sortByVotes();
+	}
+	
+	sortByOldest = () => {		
+		this.props.sortByOld();
+	}
+	
+	sortByNewest = () => {		
+		this.props.sortByNew();
+	}		
 		
 	render() {
 		const { posts } = this.props;
 		return (
 				<div>
+					<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
+						<Row>			
+							<Col xs={6} sm={2} md={2}>
+								<Button onClick={ () => this.sortByVoteScore() } 
+										style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+										bsStyle="link">
+										Popular
+								</Button>
+							</Col>
+							<Col xs={6} sm={1} md={2}>
+								<Button onClick={ () => this.sortByNewest() } 
+									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+									bsStyle="link">
+									New
+								</Button>
+							</Col>
+							<Col xs={6} sm={1} md={2}>
+								<Button onClick={ () => this.sortByOldest() } 
+									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+									bsStyle="link">
+									Old
+								</Button>
+							</Col>
+							<Col xs={6} sm={2} md={2}>
+								<Button onClick={() => console.log('create option to make new posts')} 
+									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
+									bsStyle="link">
+									Create New Post
+								</Button>
+							</Col>
+						</Row>
+					</Jumbotron>					
 					{posts.map( eachPost => (
 						<Row className="postContainer" key={eachPost.id}>
 							<Col xs={1} md={1} className='iconDiv'>
@@ -48,17 +93,20 @@ class DisplayPosts extends Component {
 									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
 									<span className='comments'>Comments: {eachPost.commentCount}</span>
 								</div>																
-							</Col>
-						</Row>																				
-					))}							
+							</Col>										
+						</Row>															
+					))}
 				</div>
-		);
-	} 
+				);
+			} 
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		voteOnPost: (data) => dispatch(fetchVoteScore(data))
+		voteOnPost: (data) => dispatch(fetchVoteScore(data)),
+		sortByVotes: (data) => dispatch(sortByVoteOrder(data)),
+		sortByNew: (data) => dispatch(sortByNewestDate(data)),
+		sortByOld: (data) => dispatch(sortByOldestDate(data))		
 	}
 }
 

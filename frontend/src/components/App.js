@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
-import { 
-setCategories, getPosts, sortByVoteOrder, sortByNewestDate, sortByOldestDate 
-} from '../actions/index.js';
-import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
+import { setCategories, getPosts } from '../actions/index.js';
+import { Nav, Navbar, NavItem, Jumbotron, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js';
 import { Route, withRouter } from 'react-router-dom';
@@ -13,6 +11,7 @@ import ReactPage  from './reactpage.js';
 import ReduxPage  from './reduxpage.js';
 import UdacityPage from './udacitypage.js';
 import DisplayPosts from './DisplayPosts.js';
+import RouteThePosts from './RouteThePosts.js';
 
 class App extends Component {
 	state = {
@@ -33,18 +32,6 @@ class App extends Component {
 				this.props.setCategory(category);
 			})
 		})		
-	}
-	
-	sortByVoteScore = () => {		
-		this.props.sortByVotes();
-	}
-	
-	sortByOldest = () => {		
-		this.props.sortByOld();
-	}
-	
-	sortByNewest = () => {		
-		this.props.sortByNew();
 	}	
 	
 	componentDidMount() {
@@ -84,39 +71,7 @@ class App extends Component {
 						<Col xs={4} sm={2} md={2}> <img style={{margin: '1.25rem 0 0 0'}} src={redditLogo} alt="logo" /></Col>
 						<Col xs={8} sm={10} md={10}><h1 style={{ fontSize: '4.45rem',textAlign:'left'}}>/R/eadit</h1></Col>
 					</Row>				
-				</Jumbotron>
-				<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
-					<Row>			
-						<Col xs={6} sm={2} md={2}>
-							<Button onClick={ () => this.sortByVoteScore() } 
-									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-									bsStyle="link">
-									Popular
-							</Button>
-						</Col>
-						<Col xs={6} sm={1} md={2}>
-							<Button onClick={ () => this.sortByNewest() } 
-								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-								bsStyle="link">
-								New
-							</Button>
-						</Col>
-						<Col xs={6} sm={1} md={2}>
-							<Button onClick={ () => this.sortByOldest() } 
-								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-								bsStyle="link">
-								Old
-							</Button>
-						</Col>
-						<Col xs={6} sm={2} md={2}>
-							<Button onClick={() => console.log('create option to make new posts')} 
-								style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-								bsStyle="link">
-								Create New Post
-							</Button>
-						</Col>
-					</Row>
-				</Jumbotron>								
+				</Jumbotron>							
 				
 				<Route exact path="/" render={() => (
 					<DisplayPosts posts={posts}/>
@@ -132,10 +87,16 @@ class App extends Component {
 				
 				<Route exact path="/udacity" render={() => (
 					<UdacityPage/>			
-				)}/>				
-		
+				)}/>
 
-														
+				{/* For every post in data, map through it and create Routes*/}
+				{posts.map( eachPost => (
+					<Route 	exact path={`/${eachPost.category}/${eachPost.id}`} 
+							key={eachPost.id} 
+							render={() => (
+						<RouteThePosts postInfo={eachPost} />
+					)}/>
+				))}
 			</div>
 		);
 	} 
@@ -151,10 +112,7 @@ function mapStateToProps({ categories, posts}) {
 function mapDispatchToProps(dispatch) {
 	return {
 		setCategory: (data) => dispatch(setCategories(data)),
-		getPost: (data) => dispatch(getPosts(data)),
-		sortByVotes : (data) => dispatch(sortByVoteOrder(data)),
-		sortByNew: (data) => dispatch(sortByNewestDate(data)),
-		sortByOld: (data) => dispatch(sortByOldestDate(data))
+		getPost: (data) => dispatch(getPosts(data))
 	}
 }
 
