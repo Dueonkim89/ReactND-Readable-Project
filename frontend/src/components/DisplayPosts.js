@@ -3,24 +3,35 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { fetchVoteScore } from '../actions/index.js';
 
 class DisplayPosts extends Component {
-	
 	getDate = (posixNumber) => {
 		return new Date(posixNumber).toLocaleDateString();
-	}	
+	}
 	
+	vote = (id, choice) => {
+		const voteInfo = {
+			type: 'posts',
+			id,
+			choice
+		}
+		this.props.voteOnPost(voteInfo)
+	}
+		
 	render() {
 		const { posts } = this.props;
 		return (
 				<div>
-					{posts.map( eachPost => (							
+					{posts.map( eachPost => (
 						<Row className="postContainer" key={eachPost.id}>
 							<Col xs={1} md={1} className='iconDiv'>
-								<a className="topArrow" onClick={()=> console.log('increment voteScore by 1')}>	
+								<a className="topArrow" onClick={ ()=> this.vote(eachPost.id, 'upVote') }>	
 									<img src={upArrowIcon} alt='Up Arrow Icon'/>
 								</a> 
-								<a className="downArrow" onClick={()=> console.log('decrement voteScore by 1')}>																
+								<a className="downArrow" onClick={ ()=> this.vote(eachPost.id, 'downVote') }>																
 									<img src={downArrowIcon} alt='Down Arrow Icon'/>
 								</a>
 								{ eachPost.voteScore < 0 ? (
@@ -45,4 +56,11 @@ class DisplayPosts extends Component {
 	} 
 }
 
-export default DisplayPosts;
+function mapDispatchToProps(dispatch) {
+	return {
+		voteOnPost: (data) => dispatch(fetchVoteScore(data))
+	}
+}
+
+
+export default withRouter(connect(null, mapDispatchToProps)(DisplayPosts));

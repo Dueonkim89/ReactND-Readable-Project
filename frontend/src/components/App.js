@@ -5,7 +5,7 @@ setCategories, getPosts, sortByVoteOrder, sortByNewestDate, sortByOldestDate
 } from '../actions/index.js';
 import { Nav, Navbar, NavItem, Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import * as ServerCall from '../utils/api.js'
+import * as ServerCall from '../utils/api.js';
 import { Route, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';

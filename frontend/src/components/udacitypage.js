@@ -16,7 +16,6 @@ class UdacityPage extends Component {
 	} 
 }
 
-
 function mapStateToProps({ categories, posts}) {
 	return {
 		categories,

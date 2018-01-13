@@ -1,5 +1,5 @@
 import { 
-SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST
+SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_VOTESCORE
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
 
@@ -40,6 +40,24 @@ function posts( state = [], action) {
 			return [...state].sort( (a,b) =>  a.timestamp - b.timestamp )
 	}	else if (action.type === SORT_BY_NEWEST) {
 			return [...state].sort( (a,b) =>  b.timestamp - a.timestamp )
+	}	else if (action.type === UPDATE_VOTESCORE) {
+		/*Pure function that filters state to find the specific post that was changed
+		 Once, it is found. We map it to change the voteScore to the updated score. 
+		 Then we filter the store again to find the other unaltered posts, and splice in the changed post into 
+		 the exact same position it was in the original state. 
+		*/		
+		let position;
+		let postToBeChanged = [...state].filter( (x, index) => {
+			if (x.id === id) {
+				position = index;
+			}
+			return x.id === id;
+		}).map((item) => {
+			return {...item, voteScore}
+		})
+		let updatedState = [...state].filter( x => x.id !== id );
+		updatedState.splice(position, 0, ...postToBeChanged);
+		return updatedState;
 	}	else {
 			return state;
 	}
