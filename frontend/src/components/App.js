@@ -32,7 +32,9 @@ class App extends Component {
 				this.props.setCategory(category);
 			})
 		})		
-	}	
+	}
+
+		
 	
 	componentDidMount() {
 		//set states for category and posts in redux store to values found in server

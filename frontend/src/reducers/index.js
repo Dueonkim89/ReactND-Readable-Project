@@ -1,5 +1,6 @@
 import { 
-SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_VOTESCORE
+SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_VOTESCORE, 
+GET_COMMENTS
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
 
@@ -64,12 +65,32 @@ function posts( state = [], action) {
 }
 
 // reducer to make comments
-
+function comments(state = [], action) {
+	const { id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted } = action;
+	if (action.type === GET_COMMENTS) {
+		return [
+			...state,
+			{ id, 
+			  parentId,
+			  timestamp,
+			  body,
+			  author,
+			  voteScore,
+			  deleted,
+			  parentDeleted
+			}
+		]		
+	}	else {
+		return state;
+	}
+	
+}
 
 
 export default combineReducers({
 	categories,
-	posts
+	posts,
+	comments
 })
 
 	

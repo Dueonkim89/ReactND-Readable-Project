@@ -22,3 +22,6 @@ export const voteOnThread = (topic, id, vote) => fetch(`${api}/${topic}/${id}`, 
 	headers
 })	
 
+export const getCommentsPerPost = (id) => fetch(`${api}/posts/${id}/comments`, { headers })
+	.then(response => response.json())
+

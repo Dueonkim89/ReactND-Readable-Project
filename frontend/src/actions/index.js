@@ -6,7 +6,7 @@ export const SORT_BY_VOTESCORE = 'SORT_BY_VOTESCORE';
 export const SORT_BY_OLDEST = 'SORT_BY_OLDEST';
 export const SORT_BY_NEWEST = 'SORT_BY_NEWEST';
 export const UPDATE_VOTESCORE = 'UPDATE_VOTESCORE';
-
+export const GET_COMMENTS = 'GET_COMMENTS';
 
 export function setCategories({name, path}) {
 	return {
@@ -29,6 +29,20 @@ export function getPosts({id, timestamp, title, body, author, category, voteScor
 		deleted,
 		commentCount
 	}
+}
+
+export function getComments({id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted}) {
+	return {
+		type: GET_COMMENTS,
+		id,
+		parentId,
+		timestamp,
+		body,
+		author,
+		voteScore,
+		deleted,
+		parentDeleted
+	}	
 }
 
 export function sortByOldestDate() {
