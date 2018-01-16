@@ -7,9 +7,6 @@ import * as ServerCall from '../utils/api.js';
 import { Route, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';
-import ReactPage  from './reactpage.js';
-import ReduxPage  from './reduxpage.js';
-import UdacityPage from './udacitypage.js';
 import DisplayPosts from './DisplayPosts.js';
 import RouteThePosts from './RouteThePosts.js';
 
@@ -73,17 +70,12 @@ class App extends Component {
 					<DisplayPosts filterWord={'none'}/>
 				)}/>
 				
-				<Route exact path="/react" render={() => (
-					<ReactPage/>		
-				)}/>
-				
-				<Route exact path="/redux" render={() => (
-					<ReduxPage/>				
-				)}/>
-				
-				<Route exact path="/udacity" render={() => (
-					<UdacityPage/>			
-				)}/>
+				{/* Map thru categories in redux store to create routes. Then pass in DisplayPosts component.*/}
+				{categories.map(( {name, path}, index ) => (
+					<Route key ={name} exact path={`/${path}`} render={() => (
+						<DisplayPosts filterWord={path}/>		
+					)}/>				
+				))}								
 
 				{/* For every post found in redux store, map through it and create Routes*/}
 				{posts.map( eachPost => (

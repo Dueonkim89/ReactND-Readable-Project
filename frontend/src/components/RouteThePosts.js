@@ -49,8 +49,9 @@ class RouteThePosts extends Component {
 
 	render() {
 		const { postInfo, numberOfComments } = this.state;
-		const { posts } = this.props;
+		const { posts, comments } = this.props;
 		console.log(this.state)
+		console.log(comments)
 		return (
 				<div>
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
@@ -106,6 +107,7 @@ class RouteThePosts extends Component {
 									<span className='comments'>{numberOfComments} Comments </span>
 								</Col>
 							</Row>
+							{/* Pass in parent id of post, so comments can be created.*/}
 						</div>
 					))}
 					
