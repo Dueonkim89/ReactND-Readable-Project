@@ -9,6 +9,15 @@ import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { sortByVoteOrder, sortByNewestDate, sortByOldestDate } from '../actions/index.js';
 
 class DisplayPosts extends Component {
+	state = {
+		filterWord: null,
+	}
+
+	componentDidMount() {
+		const { filterWord } = this.props;
+		this.setState({ filterWord });
+	}	
+	
 	getDate = (posixNumber) => {
 		return new Date(posixNumber).toLocaleDateString();
 	}
@@ -35,10 +44,12 @@ class DisplayPosts extends Component {
 	}		
 		
 	render() {
+		const { filterWord } = this.state;
 		const { posts } = this.props;
 		return (
 				<div>
-					<Jumbotron id="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
+					{/* Button Div displayed on top of subsections*/}
+					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 						<Row>			
 							<Col xs={6} sm={2} md={2}>
 								<Button onClick={ () => this.sortByVoteScore() } 
@@ -69,8 +80,36 @@ class DisplayPosts extends Component {
 								</Button>
 							</Col>
 						</Row>
-					</Jumbotron>					
-					{posts.map( eachPost => (
+					</Jumbotron>
+					{/* If, filter word is none. map through all of the posts*/}
+					{filterWord === 'none' && posts.map( eachPost => (
+						<Row className="postContainer" key={eachPost.id}>
+							<Col xs={1} md={1} className='iconDiv'>
+								<a className="topArrow" onClick={ ()=> this.vote(eachPost.id, 'upVote') }>	
+									<img src={upArrowIcon} alt='Up Arrow Icon'/>
+								</a> 
+								<a className="downArrow" onClick={ ()=> this.vote(eachPost.id, 'downVote') }>																
+									<img src={downArrowIcon} alt='Down Arrow Icon'/>
+								</a>
+								{ eachPost.voteScore < 0 ? (
+									<span className="voteScoreNegative">{eachPost.voteScore}</span>	
+								) : (
+									<span className="voteScore">{eachPost.voteScore}</span>	
+								)}									
+							</Col>
+							<Col xs={11} md={9} className='titleDiv'>
+								<Link to={`/${eachPost.category}/${eachPost.id}`} className='listTitle'>{eachPost.title}</Link>
+								<div className='categoryDiv'>
+									<span className='category'>Category: {eachPost.category}</span>
+									<span className='author'>Author: {eachPost.author}</span>
+									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
+									<span className='comments'>Comments: {eachPost.commentCount}</span>
+								</div>																
+							</Col>										
+						</Row>															
+					))}	
+					{/* Filter posts thru specific filterWord then map through all of the posts*/}
+					{posts.filter(post => post.category === filterWord).map( eachPost => (
 						<Row className="postContainer" key={eachPost.id}>
 							<Col xs={1} md={1} className='iconDiv'>
 								<a className="topArrow" onClick={ ()=> this.vote(eachPost.id, 'upVote') }>	
@@ -101,6 +140,12 @@ class DisplayPosts extends Component {
 			} 
 }
 
+function mapStateToProps({ posts }) {
+	return {
+		posts
+	}
+}
+
 function mapDispatchToProps(dispatch) {
 	return {
 		voteOnPost: (data) => dispatch(fetchVoteScore(data)),
@@ -110,5 +155,4 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-
-export default withRouter(connect(null, mapDispatchToProps)(DisplayPosts));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DisplayPosts));

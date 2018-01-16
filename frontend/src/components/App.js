@@ -14,10 +14,7 @@ import DisplayPosts from './DisplayPosts.js';
 import RouteThePosts from './RouteThePosts.js';
 
 class App extends Component {
-	state = {
-		windowWidth: ''
-	}
-	
+
 	getPosts = () => {
 		ServerCall.getPosts().then((data) => {
 			data.forEach( post => {
@@ -33,8 +30,6 @@ class App extends Component {
 			})
 		})		
 	}
-
-		
 	
 	componentDidMount() {
 		//set states for category and posts in redux store to values found in server
@@ -44,7 +39,6 @@ class App extends Component {
 		
 	render() {	
 		const { categories, posts } = this.props;
-		console.log(this.props)
 		return (
 			<div className="App">
 			{/* The default nav bar that shows up in every url path.*/}
@@ -67,7 +61,7 @@ class App extends Component {
 					</Nav>
 				</Navbar>
 				
-				{/* Jumbotron that contains the logo/header and the buttons to filter the posts*/}	
+				{/* Jumbotron that contains the logo/header */}	
 				<Jumbotron id="iconHolder" style={{margin: '0', padding:'0 3rem', backgroundColor: '#A2A2A2', color:'#F2F2F2'}}>
 					<Row>
 						<Col xs={4} sm={2} md={2}> <img style={{margin: '1.25rem 0 0 0'}} src={redditLogo} alt="logo" /></Col>
@@ -76,7 +70,7 @@ class App extends Component {
 				</Jumbotron>							
 				
 				<Route exact path="/" render={() => (
-					<DisplayPosts posts={posts}/>
+					<DisplayPosts filterWord={'none'}/>
 				)}/>
 				
 				<Route exact path="/react" render={() => (
@@ -91,12 +85,12 @@ class App extends Component {
 					<UdacityPage/>			
 				)}/>
 
-				{/* For every post in data, map through it and create Routes*/}
+				{/* For every post found in redux store, map through it and create Routes*/}
 				{posts.map( eachPost => (
 					<Route 	exact path={`/${eachPost.category}/${eachPost.id}`} 
 							key={eachPost.id} 
 							render={() => (
-						<RouteThePosts postInfo={eachPost} />
+						<RouteThePosts postInfo={eachPost.id} />
 					)}/>
 				))}
 			</div>

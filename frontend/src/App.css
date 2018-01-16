@@ -1,7 +1,3 @@
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
 
 body {
 	background-color: #e6e6e6;
@@ -54,9 +50,21 @@ button:hover {
 	margin-left: 3.2rem;
 }
 
-.postContainer {
-	padding: 3rem 0;
+.postContainer, .routePostContainer {
+	padding: 3rem 0 1.75rem 0;
 	background-color: #e6e6e6;
+	max-width: 100%;
+}
+
+.postBodyContainer, .commentButtonContainer {
+	padding: .5rem;
+	background-color: #e6e6e6;
+	max-width: 100%;
+}
+
+.postBody {
+	font-size: 1.25rem;
+	line-height: 2rem;
 }
 
 .titleDiv {
@@ -73,6 +81,13 @@ button:hover {
 	color: #778899;
 }
 
+.postTitle {
+	margin: 1.4rem 0 0 6rem;
+	display: inline-block;
+	color: #778899;
+	font-size: 1.4rem;
+}
+
 .categoryDiv {
 	font-size: 1.2rem;	
 	margin: .75rem 0 0 6rem;
@@ -84,6 +99,27 @@ button:hover {
 }
 
 @media (min-width: 768px) {
+	.commentButtonContainer	{
+		margin-top: 1rem;
+	}
+	
+	.postContainer {
+		padding: 3rem 0;	
+	}
+	
+	.routePostContainer {
+		padding: 3rem 1rem 1.5rem 1rem;
+	}
+	
+	.postBodyContainer {
+		padding: 1rem;
+	}
+
+	.postBody, .comments {
+		font-size: 1.4rem;
+		margin-left: 1.15rem;
+	}
+
 	.titleDiv {
 		margin-top: -1.35rem;
 	}	
@@ -92,6 +128,12 @@ button:hover {
 		margin: 0 0 .75rem 1.15rem;
 		font-size: 2.15rem;
 		display: inline-block;
+	}
+	
+	.postTitle {
+		margin: 1.3rem 0 .75rem 1.15rem;
+		font-size: 2.15rem;
+		display: inline-block;		
 	}
 	
 	.categoryDiv {
@@ -109,6 +151,15 @@ button:hover {
 }
 
 @media (min-width: 1024px) {
+	.postBody {
+		font-size: 1.6rem;
+		line-height: 2.25rem;
+	}
+
+	.comments {
+		font-size: 1.6rem;
+	}
+	
 	.listTitle {
 		font-size: 2.45rem;
 	}	
@@ -119,4 +170,11 @@ button:hover {
 	.iconDiv {
 		margin-top: 1rem;
 	}
+	
+	.postTitle {
+		margin: 1.4rem 0 .25rem 1rem;
+		font-size: 2.75rem;
+		display: inline-block;
+		color: #778899;
+	}	
 }
