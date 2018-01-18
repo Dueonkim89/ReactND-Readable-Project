@@ -42,6 +42,7 @@ button:hover {
 	left: 4.75rem;
 }
 
+
 .voteScore {
 	margin-left: 3.6rem;
 }
@@ -56,8 +57,20 @@ button:hover {
 	max-width: 100%;
 }
 
-.postBodyContainer, .commentButtonContainer {
+.commentContainer {
+	padding: 2.5rem 0 1.75rem 0;
+	background-color: #e6e6e6;
+	max-width: 100%;
+}
+
+.postBodyContainer {
 	padding: .5rem;
+	background-color: #e6e6e6;
+	max-width: 100%;
+}
+
+.commentButtonContainer {
+	padding: 1.5rem 0 1.75rem 0;
 	background-color: #e6e6e6;
 	max-width: 100%;
 }
@@ -81,8 +94,8 @@ button:hover {
 	color: #778899;
 }
 
-.postTitle {
-	margin: 1.4rem 0 0 6rem;
+.postTitle, .commentTitle {
+	margin: 1rem 0 0 6rem;
 	display: inline-block;
 	color: #778899;
 	font-size: 1.4rem;
@@ -98,7 +111,26 @@ button:hover {
 	margin-right: 1.75rem;
 }
 
+.postDiv {
+	padding-bottom: .5rem;
+	border-bottom: 1px solid black;
+}
+
+.editCommentButton, .deleteCommentButton {
+	margin-right: 1rem;
+	padding: 2px 4px;
+}
+
+.commentButton {
+	font-weight: bold;
+}
+
+
 @media (min-width: 768px) {
+	.commentButton {
+		font-Size: 1.25rem;
+	}
+	
 	.commentButtonContainer	{
 		margin-top: 1rem;
 	}
@@ -109,6 +141,11 @@ button:hover {
 	
 	.routePostContainer {
 		padding: 3rem 1rem 1.5rem 1rem;
+	}
+	
+	.commentContainer {
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 	
 	.postBodyContainer {
@@ -132,8 +169,17 @@ button:hover {
 	
 	.postTitle {
 		margin: 1.3rem 0 .75rem 1.15rem;
+		font-size: 2.15rem;	
+	}
+	
+	.commentTitle {
 		font-size: 2.15rem;
-		display: inline-block;		
+		margin-left: 1rem;
+	}
+	
+	.editCommentButton, .deleteCommentButton {
+		padding: 4px 6px;
+		margin-right: 2rem;
 	}
 	
 	.categoryDiv {
@@ -156,7 +202,7 @@ button:hover {
 		line-height: 2.25rem;
 	}
 
-	.comments {
+	.comments, .commentButton {
 		font-size: 1.6rem;
 	}
 	
@@ -176,5 +222,9 @@ button:hover {
 		font-size: 2.75rem;
 		display: inline-block;
 		color: #778899;
+	}	
+	
+	.editCommentButton {
+		margin-left: 3.15rem;
 	}	
 }
