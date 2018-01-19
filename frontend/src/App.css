@@ -130,11 +130,7 @@ button:hover {
 	.commentButton {
 		font-Size: 1.25rem;
 	}
-	
-	.commentButtonContainer	{
-		margin-top: 1rem;
-	}
-	
+		
 	.postContainer {
 		padding: 3rem 0;	
 	}
@@ -204,6 +200,10 @@ button:hover {
 
 	.comments, .commentButton {
 		font-size: 1.6rem;
+	}
+	
+	.comments {
+		margin-left: 1.65rem;
 	}
 	
 	.listTitle {

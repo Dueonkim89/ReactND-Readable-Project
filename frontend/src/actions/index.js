@@ -5,8 +5,9 @@ export const CREATE_COMMENTS = 'CREATE_COMMENTS';
 export const SORT_BY_VOTESCORE = 'SORT_BY_VOTESCORE';
 export const SORT_BY_OLDEST = 'SORT_BY_OLDEST';
 export const SORT_BY_NEWEST = 'SORT_BY_NEWEST';
-export const UPDATE_VOTESCORE = 'UPDATE_VOTESCORE';
+export const UPDATE_POST_VOTESCORE = 'UPDATE_VOTESCORE';
 export const GET_COMMENTS = 'GET_COMMENTS';
+export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
 
 export function setCategories({name, path}) {
 	return {
@@ -63,19 +64,34 @@ export function sortByVoteOrder() {
 	}
 }
 
-export function updateVoteScore({id, voteScore}) {
+export function updatePostVoteScore({id, voteScore}) {
 	return {
-		type: UPDATE_VOTESCORE,
+		type: UPDATE_POST_VOTESCORE,
 		id,
 		voteScore
 	}
 }
 
-export const fetchVoteScore = ({type, id, choice}) => dispatch => (
+export function updateCommentVoteScore({id, voteScore}) {
+	return {
+		type: UPDATE_COMMENT_VOTESCORE,
+		id,
+		voteScore
+	}
+}
+
+export const fetchPostVoteScore = ({type, id, choice}) => dispatch => (
 	ServerCall
 	.voteOnThread(type, id, choice)
 	.then(response => response.json())
-	.then(data => dispatch(updateVoteScore(data)))
+	.then(data => dispatch(updatePostVoteScore(data)))
+);
+
+export const fetchCommentVoteScore = ({type, id, choice}) => dispatch => (
+	ServerCall
+	.voteOnThread(type, id, choice)
+	.then(response => response.json())
+	.then(data => dispatch(updateCommentVoteScore(data)))
 );
 	
 

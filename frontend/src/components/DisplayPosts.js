@@ -4,7 +4,7 @@ import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchVoteScore } from '../actions/index.js';
+import { fetchPostVoteScore } from '../actions/index.js';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { sortByVoteOrder, sortByNewestDate, sortByOldestDate } from '../actions/index.js';
 
@@ -148,7 +148,7 @@ function mapStateToProps({ posts }) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		voteOnPost: (data) => dispatch(fetchVoteScore(data)),
+		voteOnPost: (data) => dispatch(fetchPostVoteScore(data)),
 		sortByVotes: (data) => dispatch(sortByVoteOrder(data)),
 		sortByNew: (data) => dispatch(sortByNewestDate(data)),
 		sortByOld: (data) => dispatch(sortByOldestDate(data))		
