@@ -125,6 +125,38 @@ button:hover {
 	font-weight: bold;
 }
 
+textarea  {
+	resize: none;
+	padding: 5px 15px;
+	width: 100%;
+	font-size: 1.45rem;
+	border-radius: 5px;
+	height: 95px; 
+}
+
+#author-input {
+	font-size: 1.45rem;
+	width: 100%;
+	border-radius: 4px;
+	padding: 5px 15px;
+	border: 1px solid #778899;
+}
+
+input:focus, textarea:focus {
+	border: 1.5px solid #005c99 !important;
+	outline: none !important; 	
+}
+
+.modal-comment-author {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: .85rem 0 .75rem 0;
+}
+
+.modal-comment-header {
+	font-size: 1.5rem;
+}
+
 
 @media (min-width: 768px) {
 	.commentButton {
@@ -189,7 +221,28 @@ button:hover {
 	
 	.iconDiv {
 		margin-top: .75rem;
-	}	
+	}
+	
+	textarea  {
+		padding: 10px 15px;
+		font-size: 1.5rem;
+		height: 150px; 
+	}
+
+	#author-input {
+		padding: 10px 15px;
+		font-size: 1.5rem;
+	}
+
+	.modal-comment-author {
+		font-size: 1.8rem;
+		margin: 1.1rem 0 .95rem 0;
+	}
+
+	.modal-comment-header {
+		font-size: 1.8rem;
+	}
+	
 }
 
 @media (min-width: 1024px) {

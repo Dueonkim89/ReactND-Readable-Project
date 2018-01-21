@@ -6,15 +6,24 @@ import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
 import { getComments, fetchCommentVoteScore } from '../actions/index.js';
-//comments.fiter( x => x.parentId === postInfo).map( eachComment );
-
+import CommentModal from './CommentModal.js';
 
 class DisplayComments extends Component {	
-	state = {
-		postInfo: null,
-		numberOfComments: null
+	constructor(...args) {
+		super(...args);
+
+		this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+
+		this.state = { 
+						showModal: false, 
+						postInfo: null,
+						numberOfComments: null,
+						textAreaValue: '',
+						inputValue: ''
+					};
 	}
-	
+
 	vote = (type, id, choice) => {
 		//3rd argument for type. so we can take in comment as well. see server code.
 		const voteInfo = {
@@ -45,24 +54,44 @@ class DisplayComments extends Component {
 	
 	componentDidMount() {
 		const { postInfo } = this.props;
-		//set redux store for comments and create state for individual post passed as a prop
+		//set redux store for comments and create state for post.id passed as a prop
 		this.getComments(postInfo);
 		this.setState({ postInfo });
 	}	
 	
+	showCommentModal() {
+		//if argument is truthy
+		// GET /comments/:id
+		//provide id of comment so GET request can be sent over
+		//then populate the modal form field with the info of the comments
+		//if no argument, then just open the comment modal.
+		//need to send in value true as a prop to CommentModal component. 	
+	}
+	
+	handleClose() {
+		this.setState({ showModal: false });
+	}
+
+	handleShow() {
+		this.setState({ showModal: true });
+	}	
+	
 	render() {
 		const { comments } = this.props;
-		const { numberOfComments, postInfo } = this.state;
-		console.log(comments);
-		console.log(postInfo);
+		const { numberOfComments, postInfo, showModal } = this.state;
+		console.log(postInfo, showModal);
 		return (
 			<div>
+				{/* Comment Modal Component with form field*/}
+				<CommentModal hide={this.handleClose}
+						value={showModal} 				
+				/>				
 				<Row className="commentButtonContainer">
 					<Col xs={5} xsOffset={1} sm={2} md={2}>
 						<span className='comments'>{numberOfComments} Comments </span>									
 					</Col>
 					<Col xs={5} sm={2} md={3}>
-						<Button onClick={ () => console.log('created option to add comment')} 
+						<Button onClick={this.handleShow} 
 										style={{padding:'0 1.25rem'}} 
 										className='commentButton'
 										bsStyle="link">
