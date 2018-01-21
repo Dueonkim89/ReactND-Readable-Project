@@ -94,4 +94,4 @@ export const fetchCommentVoteScore = ({type, id, choice}) => dispatch => (
 	.then(data => dispatch(updateCommentVoteScore(data)))
 );
 	
-
+//export function addComment({id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted}) 

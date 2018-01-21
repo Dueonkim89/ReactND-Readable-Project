@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
 import { getComments, fetchCommentVoteScore } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
+import { v4 } from 'uuid';
 
 class DisplayComments extends Component {	
 	constructor(...args) {
@@ -19,8 +20,8 @@ class DisplayComments extends Component {
 						showModal: false, 
 						postInfo: null,
 						numberOfComments: null,
-						textAreaValue: '',
-						inputValue: ''
+						commentBody: '',
+						commentAuthor: ''
 					};
 	}
 
@@ -53,6 +54,11 @@ class DisplayComments extends Component {
 	}	
 	
 	componentDidMount() {
+		for (let i = 0; i <1; i++) {
+			let uniqueID = v4();
+			console.log(uniqueID.slice(uniqueID.length-12, uniqueID.length));
+		}
+		
 		const { postInfo } = this.props;
 		//set redux store for comments and create state for post.id passed as a prop
 		this.getComments(postInfo);
@@ -68,6 +74,24 @@ class DisplayComments extends Component {
 		//need to send in value true as a prop to CommentModal component. 	
 	}
 	
+	submitComment = () => {
+		//
+		//send in id (from uuid), timestamp, body, author, parentId to action.
+		//action will go to api.js
+	}
+	
+	editComment = () => {
+		
+	}
+	
+	updateAuthor =(name) => {
+		this.setState({ commentAuthor: name });
+	}
+	
+	updateComment =(comment) => {
+		this.setState({ commentBody: comment});
+	}	
+	
 	handleClose() {
 		this.setState({ showModal: false });
 	}
@@ -78,13 +102,15 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
-		const { numberOfComments, postInfo, showModal } = this.state;
-		console.log(postInfo, showModal);
+		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor } = this.state;
+		console.log(postInfo);
 		return (
 			<div>
 				{/* Comment Modal Component with form field*/}
-				<CommentModal hide={this.handleClose}
-						value={showModal} 				
+				<CommentModal hide={this.handleClose} value={showModal}  
+					author={commentAuthor} comment={commentBody}
+					updateAuthor={this.updateAuthor} updateComment={this.updateComment} 
+					submitComment={this.submitComment}
 				/>				
 				<Row className="commentButtonContainer">
 					<Col xs={5} xsOffset={1} sm={2} md={2}>
