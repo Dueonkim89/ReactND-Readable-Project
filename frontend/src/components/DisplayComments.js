@@ -5,7 +5,9 @@ import upArrowIcon from '../icons/upArrowIcon.svg';
 import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import { getComments, fetchCommentVoteScore, postCommentToServer } from '../actions/index.js';
+import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment
+
+} from '../actions/index.js';
 import CommentModal from './CommentModal.js';
 import { v4 } from 'uuid';
 
@@ -83,6 +85,10 @@ class DisplayComments extends Component {
 		this.handleClose();		
 	}
 	
+	delete = (id) => {
+		this.props.deleteTheComment(id);
+	}
+	
 	editComment = (author, comment) => {
 		this.handleShow();
 		this.setState({ commentAuthor: author, commentBody: comment, disabled: true });
@@ -106,6 +112,7 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
+		console.log(comments);
 		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, 
 		disabled } = this.state;						
 		return (
@@ -155,7 +162,7 @@ class DisplayComments extends Component {
 											bsStyle="primary">
 											Edit
 									</Button>									
-									<Button onClick={ () => console.log('create action and reducer to delete comment') } 
+									<Button onClick={ () => this.delete(eachComment.id) } 
 											className='deleteCommentButton'
 											bsStyle="primary">
 											Delete
@@ -181,7 +188,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		getComment: (data) => dispatch(getComments(data)),
 		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data)),
-		postComment: (data) => dispatch(postCommentToServer(data))
+		postComment: (data) => dispatch(postCommentToServer(data)),
+		deleteTheComment: (data) => dispatch(deleteComment(data))
 	}
 }
 

@@ -31,4 +31,8 @@ export const submitComment = (id, timestamp, body, author, parentId) => fetch(`$
 	headers		
 })
 
-//export const deleteComment = () =>	
+export const deleteComment = (id) => fetch(`${api}/comments/${id}/`, {
+	method: 'DELETE',
+	body: JSON.stringify({deleted: true}),
+	headers
+})

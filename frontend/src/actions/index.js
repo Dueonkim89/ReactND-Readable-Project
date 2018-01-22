@@ -7,6 +7,7 @@ export const SORT_BY_OLDEST = 'SORT_BY_OLDEST';
 export const SORT_BY_NEWEST = 'SORT_BY_NEWEST';
 export const UPDATE_POST_VOTESCORE = 'UPDATE_VOTESCORE';
 export const GET_COMMENTS = 'GET_COMMENTS';
+export const DELETE_COMMENTS = 'DELETE_COMMENTS';
 export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
 
 export function setCategories({name, path}) {
@@ -44,6 +45,14 @@ export function getComments({id, parentId, timestamp, body, author, voteScore, d
 		deleted,
 		parentDeleted
 	}	
+}
+
+export function removeComments({ id, deleted }) {
+	return {
+		type: DELETE_COMMENTS,
+		id,
+		deleted
+	}
 }
 
 export function sortByOldestDate() {
@@ -99,6 +108,13 @@ export const postCommentToServer = ({id, timestamp, body, author, parentId}) => 
 	.submitComment(id, timestamp, body, author, parentId)
 	.then(response => response.json())
 	.then(data => dispatch(getComments(data)))
+);
+
+export const deleteComment = (id) => dispatch => (
+	ServerCall
+	.deleteComment(id)
+	.then(response => response.json())
+	.then(data => dispatch(removeComments(data)))
 );
 
 

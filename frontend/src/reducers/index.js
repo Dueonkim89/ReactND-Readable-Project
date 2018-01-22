@@ -1,6 +1,6 @@
 import { 
 SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_POST_VOTESCORE, 
-GET_COMMENTS, UPDATE_COMMENT_VOTESCORE
+GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
 
@@ -42,23 +42,23 @@ function posts( state = [], action) {
 	}	else if (action.type === SORT_BY_NEWEST) {
 			return [...state].sort( (a,b) =>  b.timestamp - a.timestamp )
 	}	else if (action.type === UPDATE_POST_VOTESCORE) {
-		/*Pure function that filters state to find the specific post that was changed
-		 Once, it is found. We map it to change the voteScore to the updated score. 
-		 Then we filter the store again to find the other unaltered posts, and splice in the changed post into 
-		 the exact same position it was in the original state. 
-		*/		
-		let position;
-		let postToBeChanged = [...state].filter( (x, index) => {
-			if (x.id === id) {
-				position = index;
-			}
-			return x.id === id;
-		}).map((item) => {
-			return {...item, voteScore}
-		})
-		let updatedState = [...state].filter( x => x.id !== id );
-		updatedState.splice(position, 0, ...postToBeChanged);
-		return updatedState;
+			/*Pure function that filters state to find the specific post that was changed
+			 Once, it is found. We map it to change the voteScore to the updated score. 
+			 Then we filter the store again to find the other unaltered posts, and splice in the changed
+			 post into the exact same position it was in the original state. 
+			*/		
+			let position;
+			let postToBeChanged = [...state].filter( (x, index) => {
+				if (x.id === id) {
+					position = index;
+				}
+				return x.id === id;
+			}).map((item) => {
+				return {...item, voteScore}
+			})
+			let updatedState = [...state].filter( x => x.id !== id );
+			updatedState.splice(position, 0, ...postToBeChanged);
+			return updatedState;
 	}	else {
 			return state;
 	}
@@ -81,22 +81,23 @@ function comments(state = [], action) {
 			}
 		]		
 	}	else if (action.type === UPDATE_COMMENT_VOTESCORE) {
-		let position;
-		let postToBeChanged = [...state].filter( (x, index) => {
-			if (x.id === id) {
-				position = index;
-			}
-			return x.id === id;
-		}).map((item) => {
-			return {...item, voteScore}
-		})
-		let updatedState = [...state].filter( x => x.id !== id );
-		updatedState.splice(position, 0, ...postToBeChanged);
-		return updatedState;		
+			let position;
+			let postToBeChanged = [...state].filter( (x, index) => {
+				if (x.id === id) {
+					position = index;
+				}
+				return x.id === id;
+			}).map((item) => {
+				return {...item, voteScore}
+			})
+			let updatedState = [...state].filter( x => x.id !== id );
+			updatedState.splice(position, 0, ...postToBeChanged);
+			return updatedState;		
+	}	else if (action.type === DELETE_COMMENTS) {	
+			return [...state].filter( x => x.id !== id );
 	}	else {
 		return state;
-	}
-	
+	}	
 }
 
 
