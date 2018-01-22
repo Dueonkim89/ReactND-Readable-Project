@@ -94,4 +94,15 @@ export const fetchCommentVoteScore = ({type, id, choice}) => dispatch => (
 	.then(data => dispatch(updateCommentVoteScore(data)))
 );
 	
-//export function addComment({id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted}) 
+export const postCommentToServer = ({id, timestamp, body, author, parentId}) => dispatch => (
+	ServerCall
+	.submitComment(id, timestamp, body, author, parentId)
+	.then(response => response.json())
+	.then(data => dispatch(getComments(data)))
+);
+
+
+
+
+
+

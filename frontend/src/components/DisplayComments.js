@@ -5,7 +5,7 @@ import upArrowIcon from '../icons/upArrowIcon.svg';
 import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import { getComments, fetchCommentVoteScore } from '../actions/index.js';
+import { getComments, fetchCommentVoteScore, postCommentToServer } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
 import { v4 } from 'uuid';
 
@@ -21,7 +21,8 @@ class DisplayComments extends Component {
 						postInfo: null,
 						numberOfComments: null,
 						commentBody: '',
-						commentAuthor: ''
+						commentAuthor: '',
+						disabled: false, 
 					};
 	}
 
@@ -63,25 +64,28 @@ class DisplayComments extends Component {
 		//set redux store for comments and create state for post.id passed as a prop
 		this.getComments(postInfo);
 		this.setState({ postInfo });
-	}	
-	
-	showCommentModal() {
-		//if argument is truthy
-		// GET /comments/:id
-		//provide id of comment so GET request can be sent over
-		//then populate the modal form field with the info of the comments
-		//if no argument, then just open the comment modal.
-		//need to send in value true as a prop to CommentModal component. 	
-	}
+	}		
 	
 	submitComment = () => {
-		//
-		//send in id (from uuid), timestamp, body, author, parentId to action.
-		//action will go to api.js
+		console.log('in submit comment function')
+		// id, timestamp, body, author, parentId
+		// parentId will be from postInfo (state), author and body from state
+		//id will be from uuid, timestamp will be Date.now()
+		let uniqueID = v4();
+		const commentInfo = {
+			id: uniqueID.slice(uniqueID.length-12, uniqueID.length),
+			timestamp: Date.now(),
+			body: this.state.commentBody,
+			author: this.state.commentAuthor,
+			parentId: this.state.postInfo
+		}		
+		this.props.postComment(commentInfo);
+		this.handleClose();		
 	}
 	
-	editComment = () => {
-		
+	editComment = (author, comment) => {
+		this.handleShow();
+		this.setState({ commentAuthor: author, commentBody: comment, disabled: true });
 	}
 	
 	updateAuthor =(name) => {
@@ -93,7 +97,7 @@ class DisplayComments extends Component {
 	}	
 	
 	handleClose() {
-		this.setState({ showModal: false });
+		this.setState({ showModal: false, commentAuthor: '', commentBody: '', disabled: false });
 	}
 
 	handleShow() {
@@ -102,15 +106,15 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
-		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor } = this.state;
-		console.log(postInfo);
+		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, 
+		disabled } = this.state;						
 		return (
 			<div>
 				{/* Comment Modal Component with form field*/}
 				<CommentModal hide={this.handleClose} value={showModal}  
 					author={commentAuthor} comment={commentBody}
 					updateAuthor={this.updateAuthor} updateComment={this.updateComment} 
-					submitComment={this.submitComment}
+					submitComment={this.submitComment} disable={disabled}
 				/>				
 				<Row className="commentButtonContainer">
 					<Col xs={5} xsOffset={1} sm={2} md={2}>
@@ -146,7 +150,7 @@ class DisplayComments extends Component {
 								<div className='categoryDiv'>
 									<span className='author'>Author: {eachComment.author}</span>
 									<span className='date'>Date: {this.getDate(eachComment.timestamp)}</span>
-									<Button onClick={ () => console.log('create modal to edit comment') } 
+									<Button onClick={ ()=> this.editComment(eachComment.author, eachComment.body) } 
 											className='editCommentButton'
 											bsStyle="primary">
 											Edit
@@ -176,7 +180,8 @@ function mapStateToProps({ comments, posts }) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getComment: (data) => dispatch(getComments(data)),
-		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data))
+		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data)),
+		postComment: (data) => dispatch(postCommentToServer(data))
 	}
 }
 

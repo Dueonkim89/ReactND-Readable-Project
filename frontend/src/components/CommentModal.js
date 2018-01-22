@@ -4,8 +4,8 @@ import { Modal, Button } from 'react-bootstrap';
 
 class CommentModal extends Component {
 	render() {	
-		const { value, hide, author, comment, updateAuthor, updateComment, submitComment } = this.props;
-		console.log(author);
+		const { value, hide, author, comment, updateAuthor, updateComment, submitComment, disable 		
+		} = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -21,6 +21,7 @@ class CommentModal extends Component {
 						
 							<label className='modal-comment-author'>Author</label>
 							<input type="text" id="author-input" placeholder="Author" 
+								disabled={disable}
 								value={author} onChange={(event) => {updateAuthor(event.target.value)}}								
 							/>							
 						</form>

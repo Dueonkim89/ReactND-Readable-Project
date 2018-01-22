@@ -25,8 +25,10 @@ export const voteOnThread = (topic, id, vote) => fetch(`${api}/${topic}/${id}`, 
 export const getCommentsPerPost = (id) => fetch(`${api}/posts/${id}/comments`, { headers })
 	.then(response => response.json())
 
-/*export const submitComment = () => fetch(`${api}/comments`, {
+export const submitComment = (id, timestamp, body, author, parentId) => fetch(`${api}/comments`, {
 	method: 'POST',
-	body: JSON.stringify({option: vote}),
+	body: JSON.stringify({id, timestamp, body, author, parentId}),
 	headers		
-})	*/
+})
+
+//export const deleteComment = () =>	
