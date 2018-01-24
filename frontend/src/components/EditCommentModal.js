@@ -4,7 +4,6 @@ import { Modal, Button } from 'react-bootstrap';
 
 class EditCommentModal extends Component {
 	render() {	
-		console.log('in edit comment modal');
 		const { value, hide, author, comment, updateAuthor, updateComment, submitEditedComment, disable 		
 		} = this.props;
 		return (

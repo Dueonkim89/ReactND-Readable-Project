@@ -60,11 +60,6 @@ class DisplayComments extends Component {
 	}	
 	
 	componentDidMount() {
-		for (let i = 0; i <1; i++) {
-			let uniqueID = v4();
-			console.log(uniqueID.slice(uniqueID.length-12, uniqueID.length));
-		}
-		
 		const { postInfo } = this.props;
 		//set redux store for comments and create state for post.id passed as a prop
 		this.getComments(postInfo);
@@ -72,7 +67,6 @@ class DisplayComments extends Component {
 	}		
 	
 	submitComment = () => {
-		console.log('in submit comment function')
 		// id, timestamp, body, author, parentId
 		// parentId will be from postInfo (state), author and body from state
 		//id will be from uuid, timestamp will be Date.now()
@@ -93,12 +87,10 @@ class DisplayComments extends Component {
 	}
 	
 	editComment = (author, comment, id) => {
-		console.log('clicked on edit comment');
 		this.setState({ commentAuthor: author, commentBody: comment, disabled: true, showEditCommentModal: true, commentID: id });
 	}
 	
 	submitEditedComment = () => {
-		console.log('create PUT method to edit comment');
 		const {  commentID, commentBody} = this.state;
 		let timestamp = Date.now();
 		const commentInfo = {
@@ -128,7 +120,6 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
-		console.log(comments);
 		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, 
 		disabled, showEditCommentModal } = this.state;						
 		return (

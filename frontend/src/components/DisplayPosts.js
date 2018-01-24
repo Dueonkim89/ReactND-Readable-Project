@@ -6,16 +6,32 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchPostVoteScore } from '../actions/index.js';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
+import { v4 } from 'uuid';
+import PostModal from './PostModal.js';
 import { sortByVoteOrder, sortByNewestDate, sortByOldestDate } from '../actions/index.js';
 
 class DisplayPosts extends Component {
-	state = {
-		filterWord: null,
-	}
+	constructor(...args) {
+		super(...args);
+
+		this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+
+		this.state = { 
+						showPostModal: false, 
+						showEditPostModal: false,
+						postBody: '',
+						postAuthor: '',
+						postTitle: '',
+						category: null,
+						filterWord: null
+					};
+	}	
 
 	componentDidMount() {
 		const { filterWord } = this.props;
-		this.setState({ filterWord });
+		this.setState({ filterWord, category: 'default' });
+		//set category to disabled select option. 
 	}	
 	
 	getDate = (posixNumber) => {
@@ -41,13 +57,54 @@ class DisplayPosts extends Component {
 	
 	sortByNewest = () => {		
 		this.props.sortByNew();
-	}		
+	}
+	
+	handleShow() {
+		this.setState({ showPostModal: true });
+	}
+	
+	handleClose() {
+		this.setState({ showPostModal: false, postBody: '', postAuthor: '', postTitle: '',  category: 'default' });
+	}
+	
+	updateAuthor = (name) => {
+		this.setState({ postAuthor: name });
+	}
+	
+	updatePost = (post) => {
+		this.setState({ postBody: post });
+	}
+
+	updateTitle = (title) => {
+		this.setState({ postTitle: title });
+	}
+	
+	updateCategory = (category) => {
+		this.setState({ category });
+	}
+	
+	submitPost = () => {
+		console.log('create server method to submit post');
+		const { category } = this.state;
+		if (category === 'default') {
+			alert('You must pick a category');
+		} else {
+			this.handleClose();
+		}				
+	}
 		
 	render() {
-		const { filterWord } = this.state;
+		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category } = this.state;
 		const { posts } = this.props;
+		console.log(postBody, postAuthor);
 		return (
 				<div>
+					<PostModal hide={this.handleClose} value={showPostModal}
+						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
+						submitPost={this.submitPost} post={postBody} author={postAuthor}
+						title={postTitle} updateTitle={this.updateTitle} category={category}
+						updateCategory={this.updateCategory}
+					/>				
 					{/* Button Div displayed on top of subsections*/}
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 						<Row>			
@@ -73,7 +130,7 @@ class DisplayPosts extends Component {
 								</Button>
 							</Col>
 							<Col xs={6} sm={2} md={2}>
-								<Button onClick={() => console.log('create option to make new posts')} 
+								<Button onClick={this.handleShow} 
 									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 									bsStyle="link">
 									Create New Post

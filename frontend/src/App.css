@@ -134,7 +134,7 @@ textarea  {
 	height: 95px; 
 }
 
-#author-input {
+#author-input, #title-input {
 	font-size: 1.45rem;
 	width: 100%;
 	border-radius: 4px;
@@ -142,16 +142,25 @@ textarea  {
 	border: 1px solid #778899;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
 	border: 1.5px solid #005c99 !important;
 	outline: none !important; 	
+}
+
+select {
+	border-radius: 4px;
+	padding: 5px 5px;
+	display: block;
+	margin-top: 1.25rem;
+	font-size: 1.45rem;
 }
 
 input[type="text"]:disabled {
     background: #fff;
 }
 
-.modal-comment-author {
+.modal-comment-author, .modal-comment-title,
+.modal-comment-body, .modal-comment-category {
 	font-size: 1.5rem;
 	font-weight: bold;
 	margin: .85rem 0 .75rem 0;
@@ -233,12 +242,13 @@ input[type="text"]:disabled {
 		height: 150px; 
 	}
 
-	#author-input {
+	#author-input, #title-input {
 		padding: 10px 15px;
 		font-size: 1.5rem;
 	}
 
-	.modal-comment-author {
+	.modal-comment-author, .modal-comment-title,
+	.modal-comment-body, .modal-comment-category {
 		font-size: 1.8rem;
 		margin: 1.1rem 0 .95rem 0;
 	}

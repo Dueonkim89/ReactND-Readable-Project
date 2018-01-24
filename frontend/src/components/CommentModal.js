@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-
 class CommentModal extends Component {
 	render() {	
 		const { value, hide, author, comment, updateAuthor, updateComment, submitComment, disable 		
