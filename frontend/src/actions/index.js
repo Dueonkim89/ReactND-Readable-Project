@@ -9,6 +9,7 @@ export const UPDATE_POST_VOTESCORE = 'UPDATE_VOTESCORE';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const DELETE_COMMENTS = 'DELETE_COMMENTS';
 export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
+export const EDIT_COMMENTS = 'EDIT_COMMENTS';
 
 export function setCategories({name, path}) {
 	return {
@@ -89,6 +90,15 @@ export function updateCommentVoteScore({id, voteScore}) {
 	}
 }
 
+export function editComment({id, body, timestamp}) {
+	return {
+		type: EDIT_COMMENTS,
+		id,
+		body,
+		timestamp
+	}
+}
+
 export const fetchPostVoteScore = ({type, id, choice}) => dispatch => (
 	ServerCall
 	.voteOnThread(type, id, choice)
@@ -108,6 +118,13 @@ export const postCommentToServer = ({id, timestamp, body, author, parentId}) => 
 	.submitComment(id, timestamp, body, author, parentId)
 	.then(response => response.json())
 	.then(data => dispatch(getComments(data)))
+);
+
+export const makeChangesToComment = ({id, timestamp, body}) => dispatch => (
+	ServerCall
+	.editComment(id, timestamp, body)
+	.then(response => response.json())
+	.then(data => dispatch(editComment(data)))
 );
 
 export const deleteComment = (id) => dispatch => (

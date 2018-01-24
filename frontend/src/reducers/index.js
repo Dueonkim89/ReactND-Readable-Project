@@ -1,12 +1,11 @@
 import { 
 SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_POST_VOTESCORE, 
-GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS
+GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS, EDIT_COMMENTS
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
 
 function categories(state = [], action) {
-	const {name, path} = action;
-	
+	const {name, path} = action;	
 	if (action.type === SET_CATEGORIES) {
 		return [
 			...state,
@@ -79,10 +78,10 @@ function comments(state = [], action) {
 			  deleted,
 			  parentDeleted
 			}
-		]		
+		].sort( (a,b) =>  a.timestamp - b.timestamp )		
 	}	else if (action.type === UPDATE_COMMENT_VOTESCORE) {
 			let position;
-			let postToBeChanged = [...state].filter( (x, index) => {
+			let commentToBeChanged = [...state].filter( (x, index) => {
 				if (x.id === id) {
 					position = index;
 				}
@@ -91,10 +90,18 @@ function comments(state = [], action) {
 				return {...item, voteScore}
 			})
 			let updatedState = [...state].filter( x => x.id !== id );
-			updatedState.splice(position, 0, ...postToBeChanged);
+			updatedState.splice(position, 0, ...commentToBeChanged);
 			return updatedState;		
 	}	else if (action.type === DELETE_COMMENTS) {	
 			return [...state].filter( x => x.id !== id );
+	}	else if (action.type === EDIT_COMMENTS) {
+			let commentToBeChanged = [...state].filter( x => {
+				return x.id === id;
+			}).map((item) => {
+				return {...item, body, timestamp}
+			})
+			let commentsToReturn = [...state].filter( x => x.id !== id ).concat(commentToBeChanged);
+			return commentsToReturn.sort( (a,b) =>  a.timestamp - b.timestamp );
 	}	else {
 		return state;
 	}	

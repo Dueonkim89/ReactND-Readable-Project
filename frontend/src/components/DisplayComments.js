@@ -5,7 +5,7 @@ import upArrowIcon from '../icons/upArrowIcon.svg';
 import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment
+import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment, makeChangesToComment
 
 } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
@@ -27,6 +27,7 @@ class DisplayComments extends Component {
 						commentBody: '',
 						commentAuthor: '',
 						disabled: false, 
+						commentID: null
 					};
 	}
 
@@ -91,13 +92,22 @@ class DisplayComments extends Component {
 		this.props.deleteTheComment(id);
 	}
 	
-	editComment = (author, comment) => {
+	editComment = (author, comment, id) => {
 		console.log('clicked on edit comment');
-		this.setState({ commentAuthor: author, commentBody: comment, disabled: true, showEditCommentModal: true });
+		this.setState({ commentAuthor: author, commentBody: comment, disabled: true, showEditCommentModal: true, commentID: id });
 	}
 	
 	submitEditedComment = () => {
 		console.log('create PUT method to edit comment');
+		const {  commentID, commentBody} = this.state;
+		let timestamp = Date.now();
+		const commentInfo = {
+			id: commentID,
+			timestamp,
+			body: commentBody
+		}
+		this.props.changeComment(commentInfo);
+		this.handleClose();
 	}
 	
 	updateAuthor =(name) => {
@@ -169,7 +179,7 @@ class DisplayComments extends Component {
 								<div className='categoryDiv'>
 									<span className='author'>Author: {eachComment.author}</span>
 									<span className='date'>Date: {this.getDate(eachComment.timestamp)}</span>
-									<Button onClick={ ()=> this.editComment(eachComment.author, eachComment.body) } 
+									<Button onClick={ ()=> this.editComment(eachComment.author, eachComment.body, eachComment.id) } 
 											className='editCommentButton'
 											bsStyle="primary">
 											Edit
@@ -201,7 +211,8 @@ function mapDispatchToProps(dispatch) {
 		getComment: (data) => dispatch(getComments(data)),
 		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data)),
 		postComment: (data) => dispatch(postCommentToServer(data)),
-		deleteTheComment: (data) => dispatch(deleteComment(data))
+		deleteTheComment: (data) => dispatch(deleteComment(data)),
+		changeComment: (data) => dispatch(makeChangesToComment(data)) 
 	}
 }
 
