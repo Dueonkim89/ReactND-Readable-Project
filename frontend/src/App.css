@@ -151,12 +151,32 @@ select {
 	border-radius: 4px;
 	padding: 5px 5px;
 	display: block;
-	margin-top: 1.25rem;
 	font-size: 1.45rem;
 }
 
 input[type="text"]:disabled {
     background: #fff;
+}
+
+.warning-message {
+	font-weight: bold;
+	color: red;
+	margin-top: .75rem;
+}
+
+.select-menu-warning {
+	border: 1px solid red;
+}
+
+.select-menu-warning:focus {
+	border: 1px solid red !important;
+}
+
+.modal-comment-category-warning {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: .85rem 0 .75rem 0;
+	color: red;
 }
 
 .modal-comment-author, .modal-comment-title,
@@ -251,6 +271,16 @@ input[type="text"]:disabled {
 	.modal-comment-body, .modal-comment-category {
 		font-size: 1.8rem;
 		margin: 1.1rem 0 .95rem 0;
+	}
+	
+	.warning-message {
+		margin-top: 1.35rem;
+	}
+	
+	.modal-comment-category-warning {
+		color: red;
+		font-size: 1.8rem;
+		margin: 1.1rem 0 .95rem 0;		
 	}
 
 	.modal-comment-header {

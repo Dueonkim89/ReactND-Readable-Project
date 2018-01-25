@@ -14,7 +14,7 @@ import { Modal, Button } from 'react-bootstrap';
 class PostModal extends Component {
 	render() {	
 		const { value, hide, author, post, updateAuthor, updatePost, submitPost, title, updateTitle, 
-		category, updateCategory } = this.props;
+		category, updateCategory, categoryMissing } = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -38,20 +38,25 @@ class PostModal extends Component {
 								value={author} onChange={(event) => {updateAuthor(event.target.value)}}								
 							/>
 							
-							<label className='modal-comment-category'>
+							<label className={categoryMissing ? 'modal-comment-category-warning' : 'modal-comment-category'} >
 							  Category:
-							  <select value={category} onChange={(event) => {updateCategory(event.target.value)}}	>
+							</label>
+							  <select className={categoryMissing ? 'select-menu-warning' : ''}
+							  value={category} onChange={(event) => {updateCategory(event.target.value)}}	>
 								<option value="default" disabled={true}>Choose a category</option>
 								<option value="react">React</option>
 								<option value="redux">Redux</option>
 								<option value="udacity">Udacity</option>
 							  </select>
-							</label>
+							
+							<p style={{display: categoryMissing ? '' : 'none' }} 
+							className='warning-message'>Please choose a category!
+							</p>
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={submitPost}>Submit</Button>
-						<Button onClick={hide}>Cancel</Button>
+						<Button onClick={hide}>Cancel</Button>						
 					</Modal.Footer>
 				</Modal>				
 		)	

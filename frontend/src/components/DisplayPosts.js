@@ -19,7 +19,7 @@ class DisplayPosts extends Component {
 
 		this.state = { 
 						showPostModal: false, 
-						showEditPostModal: false,
+						categoryMissing: false,
 						postBody: '',
 						postAuthor: '',
 						postTitle: '',
@@ -65,7 +65,7 @@ class DisplayPosts extends Component {
 	}
 	
 	handleClose() {
-		this.setState({ showPostModal: false, postBody: '', postAuthor: '', postTitle: '',  category: 'default' });
+		this.setState({ showPostModal: false, postBody: '', postAuthor: '', postTitle: '',  category: 'default', categoryMissing: false });
 	}
 	
 	updateAuthor = (name) => {
@@ -88,16 +88,16 @@ class DisplayPosts extends Component {
 		console.log('create server method to submit post');
 		const { category } = this.state;
 		if (category === 'default') {
-			//change state to add red borders around select and a warning message underneath it
-			alert('You must pick a category');
+			//categoryMissing state will trigger warning to user if true.
+			this.setState({ categoryMissing: true });
 		} else {
+			//run action creator that makes a server call. 
 			this.handleClose();
-			//remove red border and red warning message
 		}				
 	}
 		
 	render() {
-		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category } = this.state;
+		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
 		const { posts } = this.props;
 		console.log(postBody, postAuthor);
 		return (
@@ -106,7 +106,7 @@ class DisplayPosts extends Component {
 						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
 						submitPost={this.submitPost} post={postBody} author={postAuthor}
 						title={postTitle} updateTitle={this.updateTitle} category={category}
-						updateCategory={this.updateCategory}
+						updateCategory={this.updateCategory} categoryMissing={categoryMissing}
 					/>				
 					{/* Button Div displayed on top of subsections*/}
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
