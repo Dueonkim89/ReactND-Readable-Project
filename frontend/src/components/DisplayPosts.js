@@ -24,7 +24,8 @@ class DisplayPosts extends Component {
 						postAuthor: '',
 						postTitle: '',
 						category: null,
-						filterWord: null
+						filterWord: null,
+						incompleteField: false
 					};
 	}	
 
@@ -87,9 +88,11 @@ class DisplayPosts extends Component {
 		console.log('create server method to submit post');
 		const { category } = this.state;
 		if (category === 'default') {
+			//change state to add red borders around select and a warning message underneath it
 			alert('You must pick a category');
 		} else {
 			this.handleClose();
+			//remove red border and red warning message
 		}				
 	}
 		

@@ -9,6 +9,8 @@ import { Modal, Button } from 'react-bootstrap';
 // alert box if valid category is not selected. (if state === default)
 //Use uuid for id, Date.now() for timestamp, 
 
+//toggle className and display based on state.
+
 class PostModal extends Component {
 	render() {	
 		const { value, hide, author, post, updateAuthor, updatePost, submitPost, title, updateTitle, 

@@ -3,8 +3,8 @@ import { Modal, Button } from 'react-bootstrap';
 
 class CommentModal extends Component {
 	render() {	
-		const { value, hide, author, comment, updateAuthor, updateComment, submitComment, disable 		
-		} = this.props;
+		const { value, hide, author, comment, updateAuthor, updateComment, submitComment, disable, editMode,
+			submitEditedComment } = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -26,7 +26,7 @@ class CommentModal extends Component {
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button onClick={submitComment}>Submit</Button>
+						<Button onClick={ editMode ? submitEditedComment : submitComment }>Submit</Button>
 						<Button onClick={hide}>Cancel</Button>
 					</Modal.Footer>
 				</Modal>				

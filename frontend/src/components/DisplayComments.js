@@ -9,7 +9,6 @@ import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment,
 
 } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
-import EditCommentModal from './EditCommentModal.js';
 import { v4 } from 'uuid';
 
 class DisplayComments extends Component {	
@@ -21,7 +20,7 @@ class DisplayComments extends Component {
 
 		this.state = { 
 						showModal: false, 
-						showEditCommentModal: false,
+						editMode: false,
 						postInfo: null,
 						numberOfComments: null,
 						commentBody: '',
@@ -87,7 +86,8 @@ class DisplayComments extends Component {
 	}
 	
 	editComment = (author, comment, id) => {
-		this.setState({ commentAuthor: author, commentBody: comment, disabled: true, showEditCommentModal: true, commentID: id });
+		this.handleShow();
+		this.setState({ commentAuthor: author, commentBody: comment, disabled: true, editMode: true, commentID: id });
 	}
 	
 	submitEditedComment = () => {
@@ -111,7 +111,7 @@ class DisplayComments extends Component {
 	}	
 	
 	handleClose() {
-		this.setState({ showModal: false, commentAuthor: '', commentBody: '', disabled: false,  showEditCommentModal: false });
+		this.setState({ showModal: false, commentAuthor: '', commentBody: '', disabled: false, editMode: false});
 	}
 
 	handleShow() {
@@ -120,8 +120,7 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
-		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, 
-		disabled, showEditCommentModal } = this.state;						
+		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, editMode, disabled } = this.state;						
 		return (
 			<div>
 				{/* TwoComment Modal Component with form field. One for editing comments, one for creating
@@ -129,13 +128,10 @@ class DisplayComments extends Component {
 				<CommentModal hide={this.handleClose} value={showModal}  
 					author={commentAuthor} comment={commentBody}
 					updateAuthor={this.updateAuthor} updateComment={this.updateComment} 
-					submitComment={this.submitComment} disable={disabled}
+					submitComment={this.submitComment} disable={disabled} editMode={editMode}
+					submitEditedComment={this.submitEditedComment}
 				/>
-				<EditCommentModal hide={this.handleClose} value={showEditCommentModal}  
-					author={commentAuthor} comment={commentBody}
-					updateAuthor={this.updateAuthor} updateComment={this.updateComment} 
-					submitEditedComment={this.submitEditedComment} disable={disabled}
-				/>				
+			
 				<Row className="commentButtonContainer">
 					<Col xs={5} xsOffset={1} sm={2} md={2}>
 						<span className='comments'>{numberOfComments} Comments </span>									
