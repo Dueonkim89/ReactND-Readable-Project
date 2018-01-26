@@ -42,3 +42,17 @@ export const deleteComment = (id) => fetch(`${api}/comments/${id}/`, {
 	body: JSON.stringify({deleted: true}),
 	headers
 })
+
+export const createNewPost = (id, timestamp, title, body, author, category) => fetch(`${api}/posts`, {
+	method: 'POST',
+	body: JSON.stringify({id, timestamp, title, body, author, category}),
+	headers		
+})
+
+
+
+
+
+
+
+

@@ -4,11 +4,11 @@ import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchPostVoteScore } from '../actions/index.js';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { v4 } from 'uuid';
 import PostModal from './PostModal.js';
-import { sortByVoteOrder, sortByNewestDate, sortByOldestDate } from '../actions/index.js';
+import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost 
+} from '../actions/index.js';
 
 class DisplayPosts extends Component {
 	constructor(...args) {
@@ -24,8 +24,7 @@ class DisplayPosts extends Component {
 						postAuthor: '',
 						postTitle: '',
 						category: null,
-						filterWord: null,
-						incompleteField: false
+						filterWord: null
 					};
 	}	
 
@@ -86,20 +85,33 @@ class DisplayPosts extends Component {
 	
 	submitPost = () => {
 		console.log('create server method to submit post');
-		const { category } = this.state;
+		//to submitPost we need: id, timestamp, title, body, author, category
+		// category, title, body, author will be from state
+		//id will be from uuid npm and timestamp will be Date.now()
+		const { category, postTitle, postBody, postAuthor } = this.state;
 		if (category === 'default') {
 			//categoryMissing state will trigger warning to user if true.
 			this.setState({ categoryMissing: true });
 		} else {
-			//run action creator that makes a server call. 
-			this.handleClose();
+			const uniqueID = v4();
+			const postInfo = {
+				id: uniqueID.slice(uniqueID.length-12, uniqueID.length),
+				timestamp: Date.now(),
+				title: postTitle,
+				body: postBody,
+				author: postAuthor,
+				category
+			}
+			//dispatch action to create new post.
+			this.props.submitNewPost(postInfo);
+			this.handleClose(postInfo);
 		}				
 	}
 		
 	render() {
 		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
 		const { posts } = this.props;
-		console.log(postBody, postAuthor);
+		console.log(category);
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal}
@@ -211,7 +223,8 @@ function mapDispatchToProps(dispatch) {
 		voteOnPost: (data) => dispatch(fetchPostVoteScore(data)),
 		sortByVotes: (data) => dispatch(sortByVoteOrder(data)),
 		sortByNew: (data) => dispatch(sortByNewestDate(data)),
-		sortByOld: (data) => dispatch(sortByOldestDate(data))		
+		sortByOld: (data) => dispatch(sortByOldestDate(data)),
+		submitNewPost: (data) => dispatch(createNewPost(data))
 	}
 }
 

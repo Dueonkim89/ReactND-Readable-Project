@@ -120,6 +120,13 @@ export const postCommentToServer = ({id, timestamp, body, author, parentId}) => 
 	.then(data => dispatch(getComments(data)))
 );
 
+export const createNewPost = ({id, timestamp, title, body, author, category}) => dispatch => (
+	ServerCall
+	.createNewPost(id, timestamp, title, body, author, category)
+	.then(response => response.json())
+	.then(data => dispatch(getPosts(data)))
+);
+
 export const makeChangesToComment = ({id, timestamp, body}) => dispatch => (
 	ServerCall
 	.editComment(id, timestamp, body)
