@@ -78,11 +78,17 @@ class DisplayComments extends Component {
 			parentId: this.state.postInfo
 		}		
 		this.props.postComment(commentInfo);
+		this.setState((prevState) => ({
+			numberOfComments: prevState.numberOfComments +1
+		}))
 		this.handleClose();		
 	}
 	
 	delete = (id) => {
 		this.props.deleteTheComment(id);
+		this.setState((prevState) => ({
+			numberOfComments: prevState.numberOfComments -1
+		}))		
 	}
 	
 	editComment = (author, comment, id) => {
@@ -120,7 +126,8 @@ class DisplayComments extends Component {
 	
 	render() {
 		const { comments } = this.props;
-		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, editMode, disabled } = this.state;						
+		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, editMode, disabled } = this.state;	
+		console.log(numberOfComments);
 		return (
 			<div>
 				{/* TwoComment Modal Component with form field. One for editing comments, one for creating
