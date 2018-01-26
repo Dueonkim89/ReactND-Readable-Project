@@ -6,6 +6,7 @@ export const SORT_BY_VOTESCORE = 'SORT_BY_VOTESCORE';
 export const SORT_BY_OLDEST = 'SORT_BY_OLDEST';
 export const SORT_BY_NEWEST = 'SORT_BY_NEWEST';
 export const UPDATE_POST_VOTESCORE = 'UPDATE_VOTESCORE';
+export const UPDATE_POST_COMMENTCOUNT = 'UPDATE_POST_COMMENTCOUNT';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const DELETE_COMMENTS = 'DELETE_COMMENTS';
 export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
@@ -79,6 +80,14 @@ export function updatePostVoteScore({id, voteScore}) {
 		type: UPDATE_POST_VOTESCORE,
 		id,
 		voteScore
+	}
+}
+
+export function updatePostCommentCount({id, commentCount}) {
+	return {
+		type: UPDATE_POST_COMMENTCOUNT,
+		id,
+		commentCount
 	}
 }
 

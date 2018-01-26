@@ -111,7 +111,6 @@ class DisplayPosts extends Component {
 	render() {
 		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
 		const { posts } = this.props;
-		console.log(category);
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal}

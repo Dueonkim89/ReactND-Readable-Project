@@ -5,8 +5,8 @@ import upArrowIcon from '../icons/upArrowIcon.svg';
 import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment, makeChangesToComment
-
+import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment, makeChangesToComment, 
+updatePostCommentCount
 } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
 import { v4 } from 'uuid';
@@ -63,32 +63,47 @@ class DisplayComments extends Component {
 		//set redux store for comments and create state for post.id passed as a prop
 		this.getComments(postInfo);
 		this.setState({ postInfo });
-	}		
+	}	
 	
 	submitComment = () => {
-		// id, timestamp, body, author, parentId
-		// parentId will be from postInfo (state), author and body from state
-		//id will be from uuid, timestamp will be Date.now()
+		this.setState((prevState) => ({
+			numberOfComments: prevState.numberOfComments +1
+		}))		
 		let uniqueID = v4();
+		//object with relevant data to be passed to postComment props.
 		const commentInfo = {
 			id: uniqueID.slice(uniqueID.length-12, uniqueID.length),
 			timestamp: Date.now(),
 			body: this.state.commentBody,
 			author: this.state.commentAuthor,
 			parentId: this.state.postInfo
-		}		
+		}
+		//dispatch first action to post comment
 		this.props.postComment(commentInfo);
-		this.setState((prevState) => ({
-			numberOfComments: prevState.numberOfComments +1
-		}))
+		// Dispatch second action to update numberOfComments on post
+		/* NOTE: experimented with many different life cycle events but none of them would send in the 
+		updated value of this.state.numberOfComments, going to have to increment by 1 and send to
+		action creator. */
+		const newCommentCount = {
+			id: this.state.postInfo,
+			commentCount: this.state.numberOfComments +1
+		}
+		this.props.updateCommentCount(newCommentCount);				
 		this.handleClose();		
 	}
 	
-	delete = (id) => {
-		this.props.deleteTheComment(id);
+	delete = (id) => {		
 		this.setState((prevState) => ({
 			numberOfComments: prevState.numberOfComments -1
-		}))		
+		}))	
+	// dispatch two actions. First to delete the comment. Second to update commentCount in post store.
+		this.props.deleteTheComment(id);
+		// send in updated numberOfComments and postInfo
+		const newCommentCount = {
+			id: this.state.postInfo,
+			commentCount: this.state.numberOfComments -1
+		}
+		this.props.updateCommentCount(newCommentCount);				
 	}
 	
 	editComment = (author, comment, id) => {
@@ -127,7 +142,6 @@ class DisplayComments extends Component {
 	render() {
 		const { comments } = this.props;
 		const { numberOfComments, postInfo, showModal, commentBody, commentAuthor, editMode, disabled } = this.state;	
-		console.log(numberOfComments);
 		return (
 			<div>
 				{/* TwoComment Modal Component with form field. One for editing comments, one for creating
@@ -206,7 +220,8 @@ function mapDispatchToProps(dispatch) {
 		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data)),
 		postComment: (data) => dispatch(postCommentToServer(data)),
 		deleteTheComment: (data) => dispatch(deleteComment(data)),
-		changeComment: (data) => dispatch(makeChangesToComment(data)) 
+		changeComment: (data) => dispatch(makeChangesToComment(data)),
+		updateCommentCount: (data) => dispatch(updatePostCommentCount(data))
 	}
 }
 
