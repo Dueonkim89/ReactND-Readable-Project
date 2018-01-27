@@ -52,7 +52,11 @@ export const createNewPost = (id, timestamp, title, body, author, category) => f
 export const getSpecificPost = (id) => fetch(`${api}/posts/${id}`, { headers })
 	.then(response => response.json())
 
-
+export const editPost = (id, timestamp, body, title) => fetch(`${api}/posts/${id}`, {
+	method: 'PUT',
+	body: JSON.stringify({timestamp, body, title}),
+	headers	
+})
 
 
 

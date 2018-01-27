@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPostVoteScore } from '../actions/index.js';
+import { fetchPostVoteScore, makeChangesToPost } from '../actions/index.js';
 import { withRouter } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
@@ -23,18 +23,32 @@ class RouteThePosts extends Component {
 						postTitle: '',
 						category: '',
 						filterWord: null,
-						disableSelectMenu: true
+						disableSelectMenu: false,
+						disableAuthorChange: false
 					};
 	}
 
 	editPost = () => {
-		console.log('edit option to be made')
 		ServerCall.getSpecificPost(this.props.postInfo).then((data) => {
-			this.setState({ postTitle: data.title, postBody: data.body, postAuthor: data.author, category: data.category });
+			this.setState({ disableSelectMenu: true, disableAuthorChange: true, postTitle: data.title, postBody: data.body, postAuthor: data.author, category: data.category });
 		})		
 	}
 	
-	submitComment = () => {
+	submitPost = () => {
+		//object with these properties: id, timestamp, body, title
+		const timestamp = Date.now();
+		const { postTitle, postBody } = this.state;
+		const postInfo = {
+			id: this.props.postInfo,
+			timestamp,
+			body: postBody,
+			title: postTitle
+		}		
+		this.props.makeChangesToPost(postInfo);
+		this.handleClose();
+	}
+	
+	deletePost = () => {
 		//to be made
 	}
 
@@ -44,7 +58,8 @@ class RouteThePosts extends Component {
 	}	
 	
 	handleClose() {
-		this.setState({ showPostModal: false });
+		this.setState({ showPostModal: false, disableSelectMenu: false, disableAuthorChange: false, 
+		postTitle: '', postBody: '', postAuthor: '', category: '' });
 	}
 	
 	updateAuthor = (name) => {
@@ -80,15 +95,15 @@ class RouteThePosts extends Component {
 		
 	render() {
 		const { posts, postInfo } = this.props;
-		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category
+		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category, disableAuthorChange
 		} = this.state;
-		console.log(postInfo, category)
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal} updateTitle={this.updateTitle}
 						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
 						disableSelectMenu={disableSelectMenu} author={postAuthor} post={postBody}
-						title={postTitle} category={category} submitComment={this.submitComment}
+						disableAuthorChange={disableAuthorChange}
+						title={postTitle} category={category} submitPost={this.submitPost}
 					/>
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 						<Row>			
@@ -155,7 +170,8 @@ function mapStateToProps({ posts }) {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		voteOnPost: (data) => dispatch(fetchPostVoteScore(data))
+		voteOnPost: (data) => dispatch(fetchPostVoteScore(data)),
+		makeChangesToPost: (data) => dispatch(makeChangesToPost(data))
 	}
 }
 

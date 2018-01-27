@@ -1,6 +1,7 @@
 import { 
 SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_POST_VOTESCORE, 
-GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS, EDIT_COMMENTS, UPDATE_POST_COMMENTCOUNT
+GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS, EDIT_COMMENTS, UPDATE_POST_COMMENTCOUNT,
+EDIT_POSTS
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
 
@@ -59,7 +60,6 @@ function posts( state = [], action) {
 			updatedState.splice(position, 0, ...postToBeChanged);
 			return updatedState;
 	}	else if (action.type === UPDATE_POST_COMMENTCOUNT) {
-			console.log(`comment count is ${commentCount}`);
 			let position;
 			let postToBeChanged = [...state].filter( (x, index) => {
 				if (x.id === id) {
@@ -72,6 +72,20 @@ function posts( state = [], action) {
 			let updatedState = [...state].filter( x => x.id !== id );
 			updatedState.splice(position, 0, ...postToBeChanged);
 			return updatedState;		
+	}	else if (action.type === EDIT_POSTS) {
+			let position;
+			let postToBeChanged = [...state].filter( (x, index) => {
+				if (x.id === id) {
+					position = index;
+				}
+				return x.id === id;
+			}).map((item) => {
+				return {...item, body, title, timestamp}
+			})
+			let updatedState = [...state].filter( x => x.id !== id );
+			updatedState.splice(position, 0, ...postToBeChanged);
+			return updatedState;			
+		
 	}	else {
 			return state;
 	}

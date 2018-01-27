@@ -14,7 +14,7 @@ import { Modal, Button } from 'react-bootstrap';
 class PostModal extends Component {
 	render() {	
 		const { value, hide, author, post, updateAuthor, updatePost, submitPost, title, updateTitle, 
-		category, updateCategory, categoryMissing, disableSelectMenu } = this.props;
+		category, updateCategory, categoryMissing, disableSelectMenu, disableAuthorChange } = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -34,7 +34,7 @@ class PostModal extends Component {
 							</textarea>
 						
 							<label className='modal-comment-author'>Author</label>
-							<input type="text" id="author-input" placeholder="Author" 
+							<input type="text" id="author-input" placeholder="Author" disabled={disableAuthorChange}
 								value={author} onChange={(event) => {updateAuthor(event.target.value)}}								
 							/>
 							

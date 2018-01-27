@@ -11,6 +11,7 @@ export const GET_COMMENTS = 'GET_COMMENTS';
 export const DELETE_COMMENTS = 'DELETE_COMMENTS';
 export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
 export const EDIT_COMMENTS = 'EDIT_COMMENTS';
+export const EDIT_POSTS = 'EDIT_POSTS';
 
 export function setCategories({name, path}) {
 	return {
@@ -108,6 +109,16 @@ export function editComment({id, body, timestamp}) {
 	}
 }
 
+export function editPost({id, timestamp, body, title}) {
+	return {
+		type: EDIT_POSTS,
+		id,
+		timestamp,
+		body,
+		title
+	}
+}
+
 export const fetchPostVoteScore = ({type, id, choice}) => dispatch => (
 	ServerCall
 	.voteOnThread(type, id, choice)
@@ -150,8 +161,11 @@ export const deleteCommentOrPost = ({type, id}) => dispatch => (
 	.then(data => dispatch(removeComments(data)))
 );
 
-
-
-
+export const makeChangesToPost = ({id, timestamp, body, title}) => dispatch => (
+	ServerCall
+	.editPost(id, timestamp, body, title)
+	.then(response => response.json())
+	.then(data => dispatch(editPost(data)))
+);
 
 
