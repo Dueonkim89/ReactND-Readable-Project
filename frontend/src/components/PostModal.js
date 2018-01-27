@@ -14,7 +14,7 @@ import { Modal, Button } from 'react-bootstrap';
 class PostModal extends Component {
 	render() {	
 		const { value, hide, author, post, updateAuthor, updatePost, submitPost, title, updateTitle, 
-		category, updateCategory, categoryMissing } = this.props;
+		category, updateCategory, categoryMissing, disableSelectMenu } = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -41,7 +41,7 @@ class PostModal extends Component {
 							<label className={categoryMissing ? 'modal-comment-category-warning' : 'modal-comment-category'} >
 							  Category:
 							</label>
-							  <select className={categoryMissing ? 'select-menu-warning' : ''}
+							  <select className={categoryMissing ? 'select-menu-warning' : ''} disabled={disableSelectMenu}
 							  value={category} onChange={(event) => {updateCategory(event.target.value)}}	>
 								<option value="default" disabled={true}>Choose a category</option>
 								<option value="react">React</option>

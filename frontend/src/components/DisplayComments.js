@@ -5,7 +5,7 @@ import upArrowIcon from '../icons/upArrowIcon.svg';
 import * as ServerCall from '../utils/api.js';
 import { withRouter } from 'react-router-dom';
 import { Button, Row, Col } from 'react-bootstrap';
-import { getComments, fetchCommentVoteScore, postCommentToServer, deleteComment, makeChangesToComment, 
+import { getComments, fetchCommentVoteScore, postCommentToServer, deleteCommentOrPost, makeChangesToComment, 
 updatePostCommentCount
 } from '../actions/index.js';
 import CommentModal from './CommentModal.js';
@@ -97,7 +97,11 @@ class DisplayComments extends Component {
 			numberOfComments: prevState.numberOfComments -1
 		}))	
 	// dispatch two actions. First to delete the comment. Second to update commentCount in post store.
-		this.props.deleteTheComment(id);
+		const commentToDelete = {
+			type: 'comments',
+			id
+		}
+		this.props.deleteTheComment(commentToDelete);
 		// send in updated numberOfComments and postInfo
 		const newCommentCount = {
 			id: this.state.postInfo,
@@ -219,7 +223,7 @@ function mapDispatchToProps(dispatch) {
 		getComment: (data) => dispatch(getComments(data)),
 		voteOnComment: (data) => dispatch(fetchCommentVoteScore(data)),
 		postComment: (data) => dispatch(postCommentToServer(data)),
-		deleteTheComment: (data) => dispatch(deleteComment(data)),
+		deleteTheComment: (data) => dispatch(deleteCommentOrPost(data)),
 		changeComment: (data) => dispatch(makeChangesToComment(data)),
 		updateCommentCount: (data) => dispatch(updatePostCommentCount(data))
 	}

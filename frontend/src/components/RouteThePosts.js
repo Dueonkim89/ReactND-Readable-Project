@@ -6,8 +6,59 @@ import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
 import DisplayComments from './DisplayComments.js';
+import PostModal from './PostModal.js';
+import * as ServerCall from '../utils/api.js';
 
 class RouteThePosts extends Component {	
+	constructor(...args) {
+		super(...args);
+
+		this.handleShow = this.handleShow.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+
+		this.state = { 
+						showPostModal: false, 
+						postBody: '',
+						postAuthor: '',
+						postTitle: '',
+						category: '',
+						filterWord: null,
+						disableSelectMenu: true
+					};
+	}
+
+	editPost = () => {
+		console.log('edit option to be made')
+		ServerCall.getSpecificPost(this.props.postInfo).then((data) => {
+			this.setState({ postTitle: data.title, postBody: data.body, postAuthor: data.author, category: data.category });
+		})		
+	}
+	
+	submitComment = () => {
+		//to be made
+	}
+
+	handleShow() {		
+		this.editPost();
+		this.setState({ showPostModal: true });
+	}	
+	
+	handleClose() {
+		this.setState({ showPostModal: false });
+	}
+	
+	updateAuthor = (name) => {
+		this.setState({ postAuthor: name });
+	}
+	
+	updatePost = (post) => {
+		this.setState({ postBody: post });
+	}
+
+	updateTitle = (title) => {
+		this.setState({ postTitle: title });
+	}	
+	
 	vote = (type, id, choice) => {
 		//3rd argument for type. so we can take in comment as well. see server code.
 		const voteInfo = {
@@ -21,15 +72,28 @@ class RouteThePosts extends Component {
 	getDate = (posixNumber) => {
 		return new Date(posixNumber).toLocaleDateString();
 	}
+	
+	deletePost = () => {
+		//to work on method to delete post. will be using deleteCommentOrPost action creator.
+		//very similar to comment modal component method
+	}
 		
 	render() {
 		const { posts, postInfo } = this.props;
+		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category
+		} = this.state;
+		console.log(postInfo, category)
 		return (
 				<div>
+					<PostModal hide={this.handleClose} value={showPostModal} updateTitle={this.updateTitle}
+						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
+						disableSelectMenu={disableSelectMenu} author={postAuthor} post={postBody}
+						title={postTitle} category={category} submitComment={this.submitComment}
+					/>
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 						<Row>			
 							<Col xs={6} sm={2} md={2}>
-								<Button onClick={ () => console.log('create modal to edit post') } 
+								<Button onClick={this.handleShow} 
 										style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 										bsStyle="link">
 										Edit Post

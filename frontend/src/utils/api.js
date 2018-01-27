@@ -37,7 +37,7 @@ export const submitComment = (id, timestamp, body, author, parentId) => fetch(`$
 	headers		
 })
 
-export const deleteComment = (id) => fetch(`${api}/comments/${id}/`, {
+export const deleteCommentOrPost = (type, id) => fetch(`${api}/${type}/${id}/`, {
 	method: 'DELETE',
 	body: JSON.stringify({deleted: true}),
 	headers
@@ -49,6 +49,8 @@ export const createNewPost = (id, timestamp, title, body, author, category) => f
 	headers		
 })
 
+export const getSpecificPost = (id) => fetch(`${api}/posts/${id}`, { headers })
+	.then(response => response.json())
 
 
 

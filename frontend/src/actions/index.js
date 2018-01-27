@@ -143,9 +143,9 @@ export const makeChangesToComment = ({id, timestamp, body}) => dispatch => (
 	.then(data => dispatch(editComment(data)))
 );
 
-export const deleteComment = (id) => dispatch => (
+export const deleteCommentOrPost = ({type, id}) => dispatch => (
 	ServerCall
-	.deleteComment(id)
+	.deleteCommentOrPost(type, id)
 	.then(response => response.json())
 	.then(data => dispatch(removeComments(data)))
 );
