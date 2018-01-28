@@ -8,7 +8,7 @@ export const SORT_BY_NEWEST = 'SORT_BY_NEWEST';
 export const UPDATE_POST_VOTESCORE = 'UPDATE_VOTESCORE';
 export const UPDATE_POST_COMMENTCOUNT = 'UPDATE_POST_COMMENTCOUNT';
 export const GET_COMMENTS = 'GET_COMMENTS';
-export const DELETE_COMMENTS = 'DELETE_COMMENTS';
+export const DELETE = 'DELETE';
 export const UPDATE_COMMENT_VOTESCORE = 'UPDATE_COMMENT_VOTESCORE';
 export const EDIT_COMMENTS = 'EDIT_COMMENTS';
 export const EDIT_POSTS = 'EDIT_POSTS';
@@ -50,9 +50,9 @@ export function getComments({id, parentId, timestamp, body, author, voteScore, d
 	}	
 }
 
-export function removeComments({ id, deleted }) {
+export function removeCommentsOrPosts({ id, deleted }) {
 	return {
-		type: DELETE_COMMENTS,
+		type: DELETE,
 		id,
 		deleted
 	}
@@ -158,7 +158,7 @@ export const deleteCommentOrPost = ({type, id}) => dispatch => (
 	ServerCall
 	.deleteCommentOrPost(type, id)
 	.then(response => response.json())
-	.then(data => dispatch(removeComments(data)))
+	.then(data => dispatch(removeCommentsOrPosts(data)))
 );
 
 export const makeChangesToPost = ({id, timestamp, body, title}) => dispatch => (

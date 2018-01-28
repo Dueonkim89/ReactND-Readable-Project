@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPostVoteScore, makeChangesToPost } from '../actions/index.js';
+import { fetchPostVoteScore, makeChangesToPost, deleteCommentOrPost } from '../actions/index.js';
 import { withRouter } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
@@ -38,18 +38,22 @@ class RouteThePosts extends Component {
 		//object with these properties: id, timestamp, body, title
 		const timestamp = Date.now();
 		const { postTitle, postBody } = this.state;
-		const postInfo = {
+		const postPayLoad = {
 			id: this.props.postInfo,
 			timestamp,
 			body: postBody,
 			title: postTitle
 		}		
-		this.props.makeChangesToPost(postInfo);
+		this.props.makeChangesToPost(postPayLoad);
 		this.handleClose();
 	}
 	
 	deletePost = () => {
-		//to be made
+		const postToDelete = {
+			type: 'posts',
+			id: this.props.postInfo
+		}
+		this.props.deleteThePost(postToDelete);		
 	}
 
 	handleShow() {		
@@ -87,12 +91,7 @@ class RouteThePosts extends Component {
 	getDate = (posixNumber) => {
 		return new Date(posixNumber).toLocaleDateString();
 	}
-	
-	deletePost = () => {
-		//to work on method to delete post. will be using deleteCommentOrPost action creator.
-		//very similar to comment modal component method
-	}
-		
+			
 	render() {
 		const { posts, postInfo } = this.props;
 		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category, disableAuthorChange
@@ -115,7 +114,7 @@ class RouteThePosts extends Component {
 								</Button>
 							</Col>
 							<Col xs={6} sm={1} md={2}>
-								<Button onClick={ () => console.log('created option to delete post')} 
+								<Button onClick={this.deletePost} 
 									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
 									bsStyle="link">
 									Delete Post
@@ -171,7 +170,8 @@ function mapStateToProps({ posts }) {
 function mapDispatchToProps(dispatch) {
 	return {
 		voteOnPost: (data) => dispatch(fetchPostVoteScore(data)),
-		makeChangesToPost: (data) => dispatch(makeChangesToPost(data))
+		makeChangesToPost: (data) => dispatch(makeChangesToPost(data)),
+		deleteThePost: (data) => dispatch(deleteCommentOrPost(data))
 	}
 }
 

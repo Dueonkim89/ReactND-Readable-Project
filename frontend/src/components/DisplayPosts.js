@@ -84,7 +84,6 @@ class DisplayPosts extends Component {
 	}
 	
 	submitPost = () => {
-		console.log('create server method to submit post');
 		//to submitPost we need: id, timestamp, title, body, author, category
 		// category, title, body, author will be from state
 		//id will be from uuid npm and timestamp will be Date.now()

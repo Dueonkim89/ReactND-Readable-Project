@@ -1,6 +1,6 @@
 import { 
 SET_CATEGORIES, GET_POSTS, SORT_BY_VOTESCORE, SORT_BY_OLDEST, SORT_BY_NEWEST, UPDATE_POST_VOTESCORE, 
-GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE_COMMENTS, EDIT_COMMENTS, UPDATE_POST_COMMENTCOUNT,
+GET_COMMENTS, UPDATE_COMMENT_VOTESCORE, DELETE, EDIT_COMMENTS, UPDATE_POST_COMMENTCOUNT,
 EDIT_POSTS
 } from '../actions/index.js';
 import { combineReducers } from 'redux';
@@ -86,6 +86,8 @@ function posts( state = [], action) {
 			updatedState.splice(position, 0, ...postToBeChanged);
 			return updatedState;			
 		
+	}	else if (action.type === DELETE) {
+		return [...state].filter( x => x.id !== id );
 	}	else {
 			return state;
 	}
@@ -120,7 +122,7 @@ function comments(state = [], action) {
 			let updatedState = [...state].filter( x => x.id !== id );
 			updatedState.splice(position, 0, ...commentToBeChanged);
 			return updatedState;		
-	}	else if (action.type === DELETE_COMMENTS) {	
+	}	else if (action.type === DELETE) {	
 			return [...state].filter( x => x.id !== id );
 	}	else if (action.type === EDIT_COMMENTS) {
 			let commentToBeChanged = [...state].filter( x => {
