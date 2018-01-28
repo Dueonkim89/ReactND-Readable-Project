@@ -1,20 +1,21 @@
-# Readable API Server
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+# Readable - Udacity Nanodegree React Project
 
-This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
+In this project, a 'Readit' webb app (REST application) was built using React & Redux. Users will be able to post content to predefined categories, comment on their posts and other users' posts and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
-## Start Developing
+## Setup
 
-To get started developing right away:
+Clone or download the [repository](https://github.com/Dueonkim89/ReactND-Readable-Project).
 
 * Install and start the API server
     - `cd api-server`
     - `npm install`
-    - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
+    - `npm start` (Server will be running on port 3001)
+    
+* In another terminal window, install and start the front-end
     - `cd frontend`
+    - `npm install`
     - `npm start`
 
 ## API Server
