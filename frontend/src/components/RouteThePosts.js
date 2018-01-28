@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchPostVoteScore, makeChangesToPost, deleteCommentOrPost } from '../actions/index.js';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
@@ -101,7 +101,7 @@ class RouteThePosts extends Component {
 					<PostModal hide={this.handleClose} value={showPostModal} updateTitle={this.updateTitle}
 						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
 						disableSelectMenu={disableSelectMenu} author={postAuthor} post={postBody}
-						disableAuthorChange={disableAuthorChange}
+						disableAuthorChange={disableAuthorChange} 
 						title={postTitle} category={category} submitPost={this.submitPost}
 					/>
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
@@ -114,11 +114,12 @@ class RouteThePosts extends Component {
 								</Button>
 							</Col>
 							<Col xs={6} sm={1} md={2}>
-								<Button onClick={this.deletePost} 
-									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-									bsStyle="link">
+								<Link to="/" onClick={this.deletePost}
+									className='delete-button'
+									style={{fontSize:'1.5rem'}} 
+								>
 									Delete Post
-								</Button>
+								</Link>
 							</Col>
 						</Row>
 					</Jumbotron>

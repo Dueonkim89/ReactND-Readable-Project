@@ -18,6 +18,7 @@ class DisplayPosts extends Component {
 		this.handleClose = this.handleClose.bind(this);
 
 		this.state = { 
+						id: '',
 						showPostModal: false, 
 						categoryMissing: false,
 						postBody: '',
@@ -92,7 +93,8 @@ class DisplayPosts extends Component {
 			//categoryMissing state will trigger warning to user if true.
 			this.setState({ categoryMissing: true });
 		} else {
-			const uniqueID = v4();
+			const uniqueID = v4();		
+			this.setState({ id: uniqueID.slice(uniqueID.length-12, uniqueID.length) });
 			const postInfo = {
 				id: uniqueID.slice(uniqueID.length-12, uniqueID.length),
 				timestamp: Date.now(),
@@ -110,6 +112,7 @@ class DisplayPosts extends Component {
 	render() {
 		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
 		const { posts } = this.props;
+		console.log(this.state.id)
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal}

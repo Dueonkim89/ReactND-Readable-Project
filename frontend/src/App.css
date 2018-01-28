@@ -22,8 +22,24 @@ button:focus, button:active {
 	box-shadow: none !important;
 }
 
-button:hover {
+button:hover, .delete-button:hover {
 	color: #818181 !important;
+}
+
+.delete-button {
+	margin-top: 1.25rem;
+	display: inline-block;
+}
+
+.submit-button {
+	padding: .82rem 1rem;
+    border: 1px solid #ccc;
+	margin-right: 2rem;
+	border-radius: 4px;
+}
+
+.submit-button:hover {
+	background-color: #e6e6e6;
 }
 
 .iconDiv {
