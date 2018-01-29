@@ -206,6 +206,27 @@ input[type="text"]:disabled {
 	font-size: 1.5rem;
 }
 
+.div-404 {
+	text-align: center;
+}
+
+.page-404 {
+	font-weight: bold;
+	font-size: 3.5rem;
+	margin-top: .5rem;	
+}
+
+.header-404 {
+	margin-top: 3rem;
+	font-weight: bold;
+	font-size: 7rem;
+}
+.message-404 {
+	font-weight: bold;
+	font-size: 2rem;
+	margin-top: 1.5rem;
+}
+
 
 @media (min-width: 768px) {
 	.commentButton {
@@ -303,6 +324,19 @@ input[type="text"]:disabled {
 		font-size: 1.8rem;
 	}
 	
+	.page-404 {
+		font-size: 4rem;
+		margin-top: 1.15rem;	
+	}
+
+	.header-404 {
+		margin-top: 5rem;
+		font-size: 10rem;
+	}
+	.message-404 {
+		font-size: 2.5rem;
+		margin-top: 2rem;
+	}	
 }
 
 @media (min-width: 1024px) {
@@ -339,5 +373,19 @@ input[type="text"]:disabled {
 	
 	.editCommentButton {
 		margin-left: 3.15rem;
-	}	
+	}
+
+	.page-404 {
+		font-size: 4.5rem;
+		margin-top: 1.5rem;	
+	}
+
+	.header-404 {
+		margin-top: 6.5rem;
+		font-size: 12rem;
+	}
+	.message-404 {
+		font-size: 3rem;
+		margin-top: 2.5rem;
+	}		
 }

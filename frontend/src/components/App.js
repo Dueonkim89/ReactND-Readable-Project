@@ -4,11 +4,12 @@ import { setCategories, getPosts } from '../actions/index.js';
 import { Nav, Navbar, NavItem, Jumbotron, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as ServerCall from '../utils/api.js';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import redditLogo from '../icons/redditLogo.svg';
 import DisplayPosts from './DisplayPosts.js';
 import RouteThePosts from './RouteThePosts.js';
+import Component404 from './404Component.js';
 
 class App extends Component {
 
@@ -66,25 +67,30 @@ class App extends Component {
 					</Row>				
 				</Jumbotron>							
 				
-				<Route exact path="/" render={() => (
-					<DisplayPosts filterWord={'none'}/>
-				)}/>
-				
-				{/* Map thru categories in redux store to create routes. Then pass in DisplayPosts component.*/}
-				{categories.map(( {name, path}, index ) => (
-					<Route key ={name} exact path={`/${path}`} render={() => (
-						<DisplayPosts filterWord={path}/>		
-					)}/>				
-				))}								
-
-				{/* For every post found in redux store, map through it and create Routes*/}
-				{posts.map( eachPost => (
-					<Route 	exact path={`/${eachPost.category}/${eachPost.id}`} 
-							key={eachPost.id} 
-							render={() => (
-						<RouteThePosts postInfo={eachPost.id} />
+				<Switch>
+					<Route exact path="/" render={() => (
+						<DisplayPosts filterWord={'none'}/>
 					)}/>
-				))}
+					
+					{/* Map thru categories in redux store to create routes. Then pass in DisplayPosts component.*/}
+					{categories.map(( {name, path}, index ) => (
+						<Route key ={name} exact path={`/${path}`} render={() => (
+							<DisplayPosts filterWord={path}/>		
+						)}/>				
+					))}								
+
+					{/* For every post found in redux store, map through it and create Routes*/}
+					{posts.map( eachPost => (
+						<Route 	exact path={`/${eachPost.category}/${eachPost.id}`} 
+								key={eachPost.id} 
+								render={() => (
+							<RouteThePosts postInfo={eachPost.id} />
+						)}/>
+					))}
+					
+					{/* Routing for paths that dont exist. Show Component404*/}
+					<Route component={Component404} />
+				</Switch>
 			</div>
 		);
 	} 
