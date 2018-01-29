@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { v4 } from 'uuid';
 import PostModal from './PostModal.js';
-import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost 
+import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost, deleteCommentOrPost
 } from '../actions/index.js';
 
 class DisplayPosts extends Component {
@@ -84,6 +84,14 @@ class DisplayPosts extends Component {
 		this.setState({ category });
 	}
 	
+	deletePost = (id) => {
+		const postToDelete = {
+			type: 'posts',
+			id
+		}
+		this.props.deleteThePost(postToDelete);		
+	}
+	
 	submitPost = () => {
 		//to submitPost we need: id, timestamp, title, body, author, category
 		// category, title, body, author will be from state
@@ -112,7 +120,6 @@ class DisplayPosts extends Component {
 	render() {
 		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
 		const { posts } = this.props;
-		console.log(this.state.id)
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal}
@@ -177,6 +184,16 @@ class DisplayPosts extends Component {
 									<span className='author'>Author: {eachPost.author}</span>
 									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
 									<span className='comments'>Comments: {eachPost.commentCount}</span>
+									<Button onClick={ ()=> console.log('edit post') } 
+											className='editPostButton'
+											bsStyle="info">
+											Edit
+									</Button>									
+									<Button onClick={ () => this.deletePost(eachPost.id) } 
+											className='deletePostButton'
+											bsStyle="info">
+											Delete
+									</Button>									
 								</div>																
 							</Col>										
 						</Row>															
@@ -204,6 +221,16 @@ class DisplayPosts extends Component {
 									<span className='author'>Author: {eachPost.author}</span>
 									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
 									<span className='comments'>Comments: {eachPost.commentCount}</span>
+									<Button onClick={ ()=> console.log('edit post') } 
+											className='editPostButton'
+											bsStyle="info">
+											Edit
+									</Button>									
+									<Button onClick={ () => this.deletePost(eachPost.id) } 
+											className='deletePostButton'
+											bsStyle="info">
+											Delete
+									</Button>										
 								</div>																
 							</Col>										
 						</Row>															
@@ -225,7 +252,8 @@ function mapDispatchToProps(dispatch) {
 		sortByVotes: (data) => dispatch(sortByVoteOrder(data)),
 		sortByNew: (data) => dispatch(sortByNewestDate(data)),
 		sortByOld: (data) => dispatch(sortByOldestDate(data)),
-		submitNewPost: (data) => dispatch(createNewPost(data))
+		submitNewPost: (data) => dispatch(createNewPost(data)),
+		deleteThePost: (data) => dispatch(deleteCommentOrPost(data))
 	}
 }
 

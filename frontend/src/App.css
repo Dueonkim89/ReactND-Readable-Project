@@ -132,7 +132,8 @@ button:hover, .delete-button:hover {
 	border-bottom: 1px solid black;
 }
 
-.editCommentButton, .deleteCommentButton {
+.editCommentButton, .deleteCommentButton,
+.editPostButton, .deletePostButton {
 	margin-right: 1rem;
 	padding: 2px 4px;
 }
@@ -227,6 +228,10 @@ input[type="text"]:disabled {
 	margin-top: 1.5rem;
 }
 
+.editPostButton, .deletePostButton {
+	margin-left: .75rem;
+}
+
 
 @media (min-width: 768px) {
 	.commentButton {
@@ -278,6 +283,11 @@ input[type="text"]:disabled {
 	.editCommentButton, .deleteCommentButton {
 		padding: 4px 6px;
 		margin-right: 2rem;
+	}
+	
+	.editPostButton, .deletePostButton {
+		margin-left: 2rem;
+		padding: 4px 6px;
 	}
 	
 	.categoryDiv {
@@ -371,7 +381,7 @@ input[type="text"]:disabled {
 		color: #778899;
 	}	
 	
-	.editCommentButton {
+	.editCommentButton, .editPostButton {
 		margin-left: 3.15rem;
 	}
 
