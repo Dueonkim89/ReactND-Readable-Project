@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as ServerCall from '../utils/api.js';
 import { Link } from 'react-router-dom';
 import downArrowIcon from '../icons/downArrowIcon.svg';
 import upArrowIcon from '../icons/upArrowIcon.svg';
@@ -7,7 +8,8 @@ import { withRouter } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { v4 } from 'uuid';
 import PostModal from './PostModal.js';
-import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost, deleteCommentOrPost
+import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost, 
+deleteCommentOrPost, makeChangesToPost
 } from '../actions/index.js';
 
 class DisplayPosts extends Component {
@@ -25,7 +27,10 @@ class DisplayPosts extends Component {
 						postAuthor: '',
 						postTitle: '',
 						category: null,
-						filterWord: null
+						filterWord: null,
+						disableSelectMenu: false,
+						disableAuthorChange: false,
+						editMode: false
 					};
 	}	
 
@@ -65,7 +70,8 @@ class DisplayPosts extends Component {
 	}
 	
 	handleClose() {
-		this.setState({ showPostModal: false, postBody: '', postAuthor: '', postTitle: '',  category: 'default', categoryMissing: false });
+		this.setState({ showPostModal: false, postBody: '', postAuthor: '', postTitle: '',  category: 'default', 
+		categoryMissing: false, editMode: false, disableAuthorChange: false, disableSelectMenu: false });
 	}
 	
 	updateAuthor = (name) => {
@@ -84,6 +90,14 @@ class DisplayPosts extends Component {
 		this.setState({ category });
 	}
 	
+	editPost = (id) => {
+		ServerCall.getSpecificPost(id).then((data) => {
+			this.setState({ id, disableSelectMenu: true, disableAuthorChange: true, postTitle: data.title, 
+			postBody: data.body, postAuthor: data.author, category: data.category, editMode: true });
+			this.handleShow();
+		})		
+	}
+	
 	deletePost = (id) => {
 		const postToDelete = {
 			type: 'posts',
@@ -91,6 +105,20 @@ class DisplayPosts extends Component {
 		}
 		this.props.deleteThePost(postToDelete);		
 	}
+	
+	submitEditedPost = () => {
+		//object with these properties: id, timestamp, body, title
+		const timestamp = Date.now();
+		const { postTitle, postBody, id } = this.state;
+		const postPayLoad = {
+			id,
+			timestamp,
+			body: postBody,
+			title: postTitle
+		}		
+		this.props.makeChangesToPost(postPayLoad);
+		this.handleClose();
+	}	
 	
 	submitPost = () => {
 		//to submitPost we need: id, timestamp, title, body, author, category
@@ -113,12 +141,13 @@ class DisplayPosts extends Component {
 			}
 			//dispatch action to create new post.
 			this.props.submitNewPost(postInfo);
-			this.handleClose(postInfo);
+			this.handleClose();
 		}				
 	}
 		
 	render() {
-		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing } = this.state;
+		const { filterWord, showPostModal, postBody, postAuthor, postTitle, category, categoryMissing, 
+		disableAuthorChange, disableSelectMenu, editMode } = this.state;
 		const { posts } = this.props;
 		return (
 				<div>
@@ -127,6 +156,8 @@ class DisplayPosts extends Component {
 						submitPost={this.submitPost} post={postBody} author={postAuthor}
 						title={postTitle} updateTitle={this.updateTitle} category={category}
 						updateCategory={this.updateCategory} categoryMissing={categoryMissing}
+						disableAuthorChange={disableAuthorChange} disableSelectMenu={disableSelectMenu}
+						editMode={editMode} submitEditedPost={this.submitEditedPost}
 					/>				
 					{/* Button Div displayed on top of subsections*/}
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
@@ -184,7 +215,7 @@ class DisplayPosts extends Component {
 									<span className='author'>Author: {eachPost.author}</span>
 									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
 									<span className='comments'>Comments: {eachPost.commentCount}</span>
-									<Button onClick={ ()=> console.log('edit post') } 
+									<Button onClick={ ()=> this.editPost(eachPost.id) } 
 											className='editPostButton'
 											bsStyle="info">
 											Edit
@@ -221,7 +252,7 @@ class DisplayPosts extends Component {
 									<span className='author'>Author: {eachPost.author}</span>
 									<span className='date'>Date: {this.getDate(eachPost.timestamp)}</span>
 									<span className='comments'>Comments: {eachPost.commentCount}</span>
-									<Button onClick={ ()=> console.log('edit post') } 
+									<Button onClick={ ()=> this.editPost(eachPost.id) } 
 											className='editPostButton'
 											bsStyle="info">
 											Edit
@@ -253,7 +284,8 @@ function mapDispatchToProps(dispatch) {
 		sortByNew: (data) => dispatch(sortByNewestDate(data)),
 		sortByOld: (data) => dispatch(sortByOldestDate(data)),
 		submitNewPost: (data) => dispatch(createNewPost(data)),
-		deleteThePost: (data) => dispatch(deleteCommentOrPost(data))
+		deleteThePost: (data) => dispatch(deleteCommentOrPost(data)),
+		makeChangesToPost: (data) => dispatch(makeChangesToPost(data))
 	}
 }
 

@@ -13,8 +13,9 @@ import { Modal, Button } from 'react-bootstrap';
 
 class PostModal extends Component {
 	render() {	
-		const { value, hide, author, post, updateAuthor, updatePost, submitPost, title, updateTitle, 
-		category, updateCategory, categoryMissing, disableSelectMenu, disableAuthorChange } = this.props;
+		const { value, hide, author, post, updateAuthor, updatePost, submitPost, submitEditedPost, title, 
+		updateTitle, category, updateCategory, categoryMissing, disableSelectMenu, disableAuthorChange,
+		editMode } = this.props;
 		return (
 				<Modal show={value} onHide={hide}>
 					<Modal.Header closeButton>
@@ -55,7 +56,7 @@ class PostModal extends Component {
 						</form>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button onClick={submitPost}>Submit</Button>
+						<Button onClick={editMode ? submitEditedPost : submitPost }>Submit</Button>
 						<Button onClick={hide}>Cancel</Button>						
 					</Modal.Footer>
 				</Modal>				

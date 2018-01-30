@@ -22,19 +22,20 @@ class RouteThePosts extends Component {
 						postAuthor: '',
 						postTitle: '',
 						category: '',
-						filterWord: null,
 						disableSelectMenu: false,
-						disableAuthorChange: false
+						disableAuthorChange: false,
+						editMode: false
 					};
 	}
 
 	editPost = () => {
 		ServerCall.getSpecificPost(this.props.postInfo).then((data) => {
-			this.setState({ disableSelectMenu: true, disableAuthorChange: true, postTitle: data.title, postBody: data.body, postAuthor: data.author, category: data.category });
+			this.setState({ editMode: true, disableSelectMenu: true, disableAuthorChange: true, 
+			postTitle: data.title, postBody: data.body, postAuthor: data.author, category: data.category });
 		})		
 	}
 	
-	submitPost = () => {
+	submitEditedPost = () => {
 		//object with these properties: id, timestamp, body, title
 		const timestamp = Date.now();
 		const { postTitle, postBody } = this.state;
@@ -63,7 +64,7 @@ class RouteThePosts extends Component {
 	
 	handleClose() {
 		this.setState({ showPostModal: false, disableSelectMenu: false, disableAuthorChange: false, 
-		postTitle: '', postBody: '', postAuthor: '', category: '' });
+		postTitle: '', postBody: '', postAuthor: '', category: '', editMode: false });
 	}
 	
 	updateAuthor = (name) => {
@@ -94,15 +95,15 @@ class RouteThePosts extends Component {
 			
 	render() {
 		const { posts, postInfo } = this.props;
-		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category, disableAuthorChange
-		} = this.state;
+		const { showPostModal, disableSelectMenu, postBody, postAuthor, postTitle, category, 
+		disableAuthorChange, editMode } = this.state;
 		return (
 				<div>
 					<PostModal hide={this.handleClose} value={showPostModal} updateTitle={this.updateTitle}
 						updateAuthor={this.updateAuthor} updatePost={this.updatePost}
 						disableSelectMenu={disableSelectMenu} author={postAuthor} post={postBody}
-						disableAuthorChange={disableAuthorChange} 
-						title={postTitle} category={category} submitPost={this.submitPost}
+						disableAuthorChange={disableAuthorChange} editMode={editMode}
+						title={postTitle} category={category} submitEditedPost={this.submitEditedPost}
 					/>
 					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
 						<Row>			
