@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 import { Jumbotron, Button, Row, Col } from 'react-bootstrap';
 import { v4 } from 'uuid';
 import PostModal from './PostModal.js';
+import SortButtonDiv from './SortButtonDiv.js';
 import { fetchPostVoteScore, sortByVoteOrder, sortByNewestDate, sortByOldestDate, createNewPost, 
 deleteCommentOrPost, makeChangesToPost
 } from '../actions/index.js';
@@ -160,38 +161,9 @@ class DisplayPosts extends Component {
 						editMode={editMode} submitEditedPost={this.submitEditedPost}
 					/>				
 					{/* Button Div displayed on top of subsections*/}
-					<Jumbotron className="buttonDiv" style={{margin: '0', padding:'0 2.5rem', backgroundColor: '#D2D2D2'}}>
-						<Row>			
-							<Col xs={6} sm={2} md={2}>
-								<Button onClick={ () => this.sortByVoteScore() } 
-										style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-										bsStyle="link">
-										Popular
-								</Button>
-							</Col>
-							<Col xs={6} sm={1} md={2}>
-								<Button onClick={ () => this.sortByNewest() } 
-									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-									bsStyle="link">
-									New
-								</Button>
-							</Col>
-							<Col xs={6} sm={1} md={2}>
-								<Button onClick={ () => this.sortByOldest() } 
-									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-									bsStyle="link">
-									Old
-								</Button>
-							</Col>
-							<Col xs={6} sm={2} md={2}>
-								<Button onClick={this.handleShow} 
-									style={{padding:'1.25rem 1.25rem', fontSize:'1.5rem'}} 
-									bsStyle="link">
-									Create New Post
-								</Button>
-							</Col>
-						</Row>
-					</Jumbotron>
+					<SortButtonDiv sortByVoteScore={this.sortByVoteScore} sortByNewest={this.sortByNewest}
+						sortByOldest={this.sortByOldest} show={this.handleShow}
+					/>
 					{/* If, filter word is none. map through all of the posts*/}
 					{filterWord === 'none' && posts.map( eachPost => (
 						<Row className="postContainer" key={eachPost.id}>
