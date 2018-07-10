@@ -3,7 +3,6 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const config = require('./config')
 const categories = require('./categories')
 const posts = require('./posts')
 const comments = require('./comments')
@@ -314,6 +313,10 @@ app.delete('/comments/:id', (req, res) => {
       )
 })
 
-app.listen(config.port, () => {
-  console.log('Server listening on port %s, Ctrl+C to stop', config.port)
+const port = process.env.PORT || 3001
+const origin = process.env.ORIGIN || `http://localhost:${port}`
+
+
+app.listen(port, () => {
+  console.log('Server listening on port %s, Ctrl+C to stop', port)
 })

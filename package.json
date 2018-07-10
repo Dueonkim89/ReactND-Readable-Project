@@ -1,0 +1,44 @@
+{
+  "name": "reddit-clone-server",
+  "version": "0.0.1",
+  "description": "A server for the Udacity Reddit Clone project for ReactND",
+  "main": "index.js",
+  "engines": {
+    "node": "8.1.1",
+    "npm": "5.0.3"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "react-router",
+    "redux",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "clone": "^2.1.1",
+    "concurrently": "^3.6.0",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "nodemon": "^1.17.5",
+    "bootstrap": "^3.3.7",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.31.5",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-responsive": "^4.0.3",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.17",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.1.0"
+  }
+}
