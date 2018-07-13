@@ -5,7 +5,7 @@ const comments = require('../utils/comments');
 
 
 module.exports = app => {
-	app.get('/', (req, res) => {
+	app.get('/help', (req, res) => {
 	  const help = `
 	  <pre>
 		Welcome to the Udacity Readable API!
