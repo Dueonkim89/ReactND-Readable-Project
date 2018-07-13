@@ -1,4 +1,16 @@
-const api = 'http://localhost:3001';
+console.log(process.env.NODE_ENV);
+let api = null;
+
+if (process.env.NODE_ENV === 'development') {
+	//set to where server is deployed in dev mode.
+	api = 'http://localhost:3001';
+} else {
+	//set to heroku url where project will be deployed.
+	api = 'https://thawing-sands-68410.herokuapp.com/';
+}
+
+console.log(api);
+
 let token = localStorage.token;
 
 if (!token) {
