@@ -12,7 +12,7 @@
     "server": "nodemon index.js",
     "client": "npm run start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-	"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build --prefix client"
   },
   "keywords": [
     "react-router",
@@ -23,13 +23,13 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "bootstrap": "^3.3.7",
     "clone": "^2.1.1",
     "concurrently": "^3.6.0",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "nodemon": "^1.17.5",
-    "bootstrap": "^3.3.7",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
@@ -40,6 +40,7 @@
     "react-scripts": "1.0.17",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "tmp": "0.0.33",
     "uuid": "^3.1.0"
   }
 }
