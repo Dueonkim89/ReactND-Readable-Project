@@ -10,6 +10,16 @@ app.use(cors());
 
 routes(app);
 
+if (process.env.NODE_ENV === 'production') {
+  // Express will serve up production assets main.js or main.css
+  app.use(express.static('client/build'));
+  //express serve up index.html if route is not recognized
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
 const port = process.env.PORT || 3001
 const origin = process.env.ORIGIN || `http://localhost:${port}`
 
