@@ -12,11 +12,11 @@ routes(app);
 
 if (process.env.NODE_ENV === 'production') {
   // Express will serve up production assets main.js or main.css
-  app.use(express.static('client/build'));
+  app.use(express.static('frontend/build'));
   //express serve up index.html if route is not recognized
   const path = require('path');
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 }
 
