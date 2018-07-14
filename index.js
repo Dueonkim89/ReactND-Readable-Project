@@ -8,6 +8,21 @@ const routes = require('./routes/serverRoutes');
 app.use(express.static('public'));
 app.use(cors());
 
+/*
+Change of plans. Not creating this middleware. 
+if (process.env.NODE_ENV === 'development') {
+	app.use((req, res, next) => {
+		console.log(req.headers);
+		if (!req.headers.authorization) {
+			console.log('no authorization');
+			req.headers.authorization = Math.random().toString(36).substr(-8);
+		}
+		console.log(req.headers.authorization);
+		next();
+	})
+}
+*/
+
 routes(app);
 
 if (process.env.NODE_ENV === 'production') {

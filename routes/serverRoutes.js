@@ -104,10 +104,12 @@ module.exports = app => {
 
 	  res.send(help)
 	})
-
+	
+/*	
 	app.use((req, res, next) => {
-	  const token = req.get('Authorization')
-
+	  const token = req.get('Authorization');
+	  console.log(req.headers);
+	  console.log(token);
 	  if (token) {
 		req.token = token
 		next()
@@ -116,9 +118,9 @@ module.exports = app => {
 		  error: 'Please provide an Authorization header to identify yourself (can be whatever you want)'
 		})
 	  }
-	})
-
-
+	})	
+*/	
+	
 	app.get('/categories', (req, res) => {
 		categories.getAll(req.token)
 		  .then(
