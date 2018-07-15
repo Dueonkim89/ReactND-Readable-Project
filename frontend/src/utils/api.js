@@ -1,4 +1,3 @@
-console.log(process.env.NODE_ENV);
 let api = null;
 
 if (process.env.NODE_ENV === 'development') {
@@ -6,11 +5,8 @@ if (process.env.NODE_ENV === 'development') {
 	api = 'http://localhost:3001';
 } else {
 	//set to heroku url where project will be deployed.
-	api = 'https://thawing-sands-68410.herokuapp.com/';
+	api = 'https://thawing-sands-68410.herokuapp.com';
 }
-
-console.log(api);
-
 
 let token = localStorage.token;
 
