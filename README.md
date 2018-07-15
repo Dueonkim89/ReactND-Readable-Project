@@ -8,6 +8,8 @@ In this project, a 'Readit' single page application was built using react, redux
 
 Clone or download the [repository](https://github.com/Dueonkim89/ReactND-Readable-Project).
 
-* Install dependencies and view the project.
-    - `npm install`
-    - `npm run dev` (Project will be on port 3000)  
+Install dependencies and view the project.
+- `npm install`
+- `npm run dev` (Project will be on port 3000)  
+
+A hosted version of this app is available at https://thawing-sands-68410.herokuapp.com/
